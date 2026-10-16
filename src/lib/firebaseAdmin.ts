@@ -11,6 +11,17 @@ function getRequiredEnv(name: string): string {
   return value;
 }
 
+function normalizePrivateKey(raw: string): string {
+  let key = raw.trim();
+  if (key.startsWith('FIREBASE_PRIVATE_KEY=')) {
+    key = key.slice('FIREBASE_PRIVATE_KEY='.length).trim();
+  }
+  if ((key.startsWith('"') && key.endsWith('"')) || (key.startsWith("'") && key.endsWith("'"))) {
+    key = key.slice(1, -1);
+  }
+  return key.replace(/\\\\n/g, '\n').replace(/\\n/g, '\n').replace(/\r\n/g, '\n');
+}
+
 function getFirebaseApp(): App {
   if (getApps().length > 0) {
     return getApps()[0];
@@ -18,7 +29,7 @@ function getFirebaseApp(): App {
 
   const projectId = getRequiredEnv('FIREBASE_PROJECT_ID');
   const clientEmail = getRequiredEnv('FIREBASE_CLIENT_EMAIL');
-  const privateKey = getRequiredEnv('FIREBASE_PRIVATE_KEY').replace(/\\n/g, '\n');
+  const privateKey = normalizePrivateKey(getRequiredEnv('FIREBASE_PRIVATE_KEY'));
 
   return initializeApp({
     credential: cert({
