@@ -9,6 +9,7 @@ next-env.d.ts
 prisma/dev.db
 prisma/dev.db-*
 public/custom-order-uploads/
+public/uploads/
 *-firebase-adminsdk-*.json
 cropped_circle_image.png
 .DS_Store

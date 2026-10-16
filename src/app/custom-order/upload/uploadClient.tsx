@@ -38,7 +38,7 @@ export default function CustomOrderUploadClient() {
       'Upload clear, high-resolution images for best engraving output.',
       'Avoid blurry/pixelated images.',
       'If you need text, write it in the instructions box.',
-      'Max file size: 10MB per image.'
+      'Max file size: 4MB per image.'
     ],
     []
   );
@@ -134,7 +134,7 @@ export default function CustomOrderUploadClient() {
             <div className="co-drop-icon">⬆</div>
             <div className="co-drop-title">Click or Drag & Drop to Upload</div>
             <div className="co-drop-sub">Supported formats: PNG, JPG, WEBP</div>
-            <div className="co-drop-sub">Max 10MB per image</div>
+            <div className="co-drop-sub">Max 4MB per image</div>
             <input
               ref={fileInputRef}
               type="file"

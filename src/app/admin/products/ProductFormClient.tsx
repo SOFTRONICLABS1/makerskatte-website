@@ -148,6 +148,7 @@ export default function ProductFormClient({
           />
 
           <label>Product Images</label>
+          <p>PNG, JPG, or WEBP · up to 4 MB per image</p>
           <input
             type="file"
             accept="image/png,image/jpeg,image/webp"

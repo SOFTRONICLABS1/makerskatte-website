@@ -1,20 +1,14 @@
 import { NextResponse } from 'next/server';
-import { mkdir, writeFile } from 'node:fs/promises';
-import path from 'node:path';
-import { randomBytes } from 'node:crypto';
 import { getAdminSession } from '@/lib/auth';
+import { saveImage } from '@/lib/firestoreImages';
 import sharp from 'sharp';
 
 export const runtime = 'nodejs';
 
 function getMaxUploadBytes() {
   const env = process.env.MAX_UPLOAD_BYTES ? Number(process.env.MAX_UPLOAD_BYTES) : NaN;
-  if (Number.isFinite(env) && env > 0) return env;
-  return 15 * 1024 * 1024; // 15MB default for local dev
-}
-
-function sanitizeFilename(name: string) {
-  return name.replace(/[^a-zA-Z0-9._-]/g, '_');
+  if (Number.isFinite(env) && env > 0) return Math.min(env, 4 * 1024 * 1024);
+  return 4 * 1024 * 1024; // Stay below Vercel's 4.5MB request limit.
 }
 
 export async function POST(request: Request) {
@@ -41,29 +35,16 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: `File too large (max ${maxMb}MB)` }, { status: 413 });
   }
 
-  const originalName = String((file as any).name ?? 'upload');
   const fileType = String((file as any).type ?? '');
   const allowedTypes = new Set(['image/png', 'image/jpeg', 'image/webp']);
   if (!allowedTypes.has(fileType)) {
     return NextResponse.json({ error: 'Only PNG/JPG/WEBP images are allowed' }, { status: 415 });
   }
 
-  const uploadDir = path.join(process.cwd(), 'public', 'uploads');
-  await mkdir(uploadDir, { recursive: true });
-
-  const token = randomBytes(6).toString('hex');
-  const safeName = sanitizeFilename(path.basename(originalName, path.extname(originalName)));
-  const filenameBase = `${Date.now()}_${token}_${safeName || 'image'}`;
-
   const inputBytes = Buffer.from(await (file as any).arrayBuffer());
 
   // Amazon-style consistency: normalize all uploads to the same square size and format.
   // We save WebP to reduce size while keeping quality.
-  const mainFilename = `${filenameBase}.webp`;
-  const thumbFilename = `${filenameBase}_thumb.webp`;
-  const mainPath = path.join(uploadDir, mainFilename);
-  const thumbPath = path.join(uploadDir, thumbFilename);
-
   const pipeline = sharp(inputBytes).rotate();
 
   const mainBuffer = await pipeline
@@ -78,11 +59,18 @@ export async function POST(request: Request) {
     .webp({ quality: 75 })
     .toBuffer();
 
-  await Promise.all([writeFile(mainPath, mainBuffer), writeFile(thumbPath, thumbBuffer)]);
+  if (mainBuffer.length > 2 * 1024 * 1024) {
+    return NextResponse.json({ error: 'Image is too detailed after compression. Please choose a smaller image.' }, { status: 413 });
+  }
+
+  const [url, thumbUrl] = await Promise.all([
+    saveImage(mainBuffer, 'product'),
+    saveImage(thumbBuffer, 'product')
+  ]);
 
   return NextResponse.json({
     ok: true,
-    url: `/uploads/${mainFilename}`,
-    thumbUrl: `/uploads/${thumbFilename}`
+    url,
+    thumbUrl
   });
 }
