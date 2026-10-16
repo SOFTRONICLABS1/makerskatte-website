@@ -1,0 +1,35 @@
+{
+  "name": "laser-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev -H 127.0.0.1 -p 3000",
+    "dev:3001": "next dev -H 127.0.0.1 -p 3001",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "db:setup": "sqlite3 prisma/dev.db \".read prisma/init.sql\" && (sqlite3 prisma/dev.db \"ALTER TABLE Product ADD COLUMN imageUrl TEXT;\" || true) && (sqlite3 prisma/dev.db \"ALTER TABLE Product ADD COLUMN imageUrls TEXT;\" || true) && (sqlite3 prisma/dev.db \"ALTER TABLE Product ADD COLUMN stock INTEGER NOT NULL DEFAULT 0;\" || true) && (sqlite3 prisma/dev.db \"ALTER TABLE Product ADD COLUMN subcategory TEXT;\" || true) && (sqlite3 prisma/dev.db \"ALTER TABLE CustomOrder ADD COLUMN estimatedTotal INTEGER;\" || true) && (sqlite3 prisma/dev.db \"ALTER TABLE CustomOrder ADD COLUMN status TEXT NOT NULL DEFAULT 'created';\" || true) && (sqlite3 prisma/dev.db \"ALTER TABLE CustomOrder ADD COLUMN paymentStatus TEXT NOT NULL DEFAULT 'unpaid';\" || true) && (sqlite3 prisma/dev.db \"ALTER TABLE CustomOrder ADD COLUMN paymentMethod TEXT;\" || true) && (sqlite3 prisma/dev.db \"ALTER TABLE CustomOrder ADD COLUMN updatedAt DATETIME;\" || true) && (sqlite3 prisma/dev.db \"ALTER TABLE \\\"Order\\\" ADD COLUMN paymentStatus TEXT NOT NULL DEFAULT 'unpaid';\" || true) && (sqlite3 prisma/dev.db \"ALTER TABLE \\\"Order\\\" ADD COLUMN paymentMethod TEXT;\" || true) && (sqlite3 prisma/dev.db \"ALTER TABLE \\\"Order\\\" ADD COLUMN customerName TEXT;\" || true) && (sqlite3 prisma/dev.db \"ALTER TABLE \\\"Order\\\" ADD COLUMN email TEXT;\" || true) && (sqlite3 prisma/dev.db \"ALTER TABLE \\\"Order\\\" ADD COLUMN phone TEXT;\" || true) && (sqlite3 prisma/dev.db \"ALTER TABLE \\\"Order\\\" ADD COLUMN address TEXT;\" || true) && (sqlite3 prisma/dev.db \"ALTER TABLE \\\"Order\\\" ADD COLUMN message TEXT;\" || true) && (sqlite3 prisma/dev.db \"ALTER TABLE \\\"Order\\\" ADD COLUMN updatedAt DATETIME;\" || true) && prisma generate && prisma db seed"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.18.0",
+    "bcryptjs": "^2.4.3",
+    "firebase-admin": "^13.10.0",
+    "jose": "^5.9.6",
+    "next": "^14.2.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sharp": "^0.33.4"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "25.6.0",
+    "@types/react": "^18.2.79",
+    "@types/react-dom": "^18.2.25",
+    "prisma": "^5.18.0",
+    "typescript": "^5.4.5"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.mjs"
+  }
+}

@@ -1,0 +1,101 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+model Product {
+  id            String   @id @default(cuid())
+  name          String
+  slug          String   @unique
+  description   String?
+  material      String?
+  category      String?
+  subcategory   String?
+  price         Int
+  originalPrice Int?
+  stock         Int      @default(0)
+  badge         String?
+  rating        Float?
+  reviews       Int?
+  imageUrl      String?
+  imageUrls     String?
+  isFeatured    Boolean  @default(false)
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  orderItems    OrderItem[]
+}
+
+model Order {
+  id        String      @id @default(cuid())
+  status    String      @default("created")
+  paymentStatus String  @default("unpaid")
+  paymentMethod String?
+  customerName String?
+  email     String?
+  phone     String?
+  address   String?
+  message   String?
+  total     Int         @default(0)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime?   @updatedAt
+  items     OrderItem[]
+}
+
+model OrderItem {
+  id             String  @id @default(cuid())
+  orderId        String
+  productId      String
+  quantity       Int
+  priceAtPurchase Int
+
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+model CustomOrder {
+  id        String   @id @default(cuid())
+  status    String   @default("created")
+  paymentStatus String @default("unpaid")
+  paymentMethod String?
+  name      String
+  email     String
+  phone     String?
+  material  String?
+  size      String?
+  quantity  Int?
+  urgency   String?
+  address   String?
+  message   String?
+  fileName  String?
+  estimatedTotal Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt
+}
+
+model CustomOrderPricing {
+  id        String   @id @default(cuid())
+  kind      String
+  name      String
+  price     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([kind, name])
+  @@index([kind])
+}

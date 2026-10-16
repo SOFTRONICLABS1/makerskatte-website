@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shop – MakersKatte India</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Rajdhani:wght@300;400;500;600;700&family=Noto+Sans+Devanagari:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--gold:#C8962A;--gold-light:#E8B84B;--deep:#0D0A06;--dark:#1A1308;--mid:#2C2010;--text:#F0E6CC;--muted:#9E8B6A;--accent:#D4380D;--white:#FDF8EE;--border:rgba(200,150,42,0.15);--border-hover:rgba(200,150,42,0.35);}
+    *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+    body{font-family:'Rajdhani',sans-serif;background:var(--deep);color:var(--text);overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.6;}
+    .announcement{background:linear-gradient(90deg,var(--gold) 0%,var(--gold-light) 50%,var(--gold) 100%);background-size:200% 100%;animation:shimmer 4s linear infinite;text-align:center;padding:8px;font-size:0.72rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--deep);}
+    @keyframes shimmer{to{background-position:-200% 0;}}
+    header{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 5%;background:rgba(13,10,6,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+    .logo{display:flex;flex-direction:column;line-height:1;text-decoration:none;}
+    .logo-main{font-family:'Cinzel Decorative',serif;font-size:1.35rem;color:var(--gold-light);letter-spacing:0.05em;}
+    .logo-sub{font-family:'Noto Sans Devanagari',sans-serif;font-size:0.58rem;color:var(--muted);letter-spacing:0.25em;text-transform:uppercase;margin-top:2px;}
+    nav{display:flex;align-items:center;gap:1.8rem;}
+    nav a{color:var(--muted);text-decoration:none;font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:600;transition:color 0.3s;position:relative;}
+    nav a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform 0.3s;}
+    nav a:hover,nav a.active{color:var(--gold-light);}
+    nav a:hover::after,nav a.active::after{transform:scaleX(1);}
+    .nav-icons{display:flex;align-items:center;gap:1rem;}
+    .nav-icon{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;transition:color 0.3s;position:relative;}
+    .nav-icon:hover{color:var(--gold-light);}
+    .nbadge{position:absolute;top:-6px;right:-6px;background:var(--accent);color:#fff;font-size:0.5rem;width:15px;height:15px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;}
+    .btn-sm{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--deep);border:none;padding:8px 16px;font-family:'Rajdhani',sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-block;transition:opacity 0.3s;}
+    .breadcrumb{padding:14px 5%;display:flex;align-items:center;gap:0.5rem;font-size:0.73rem;color:var(--muted);border-bottom:1px solid var(--border);}
+    .breadcrumb a{color:var(--muted);text-decoration:none;}
+    .breadcrumb a:hover{color:var(--gold);}
+    .breadcrumb span{color:var(--gold);}
+
+    /* SHOP LAYOUT */
+    .shop-layout{display:grid;grid-template-columns:240px 1fr;gap:0;min-height:80vh;}
+
+    /* SIDEBAR */
+    .sidebar{border-right:1px solid var(--border);padding:2rem 1.5rem;background:rgba(26,19,8,0.5);position:sticky;top:73px;height:calc(100vh - 73px);overflow-y:auto;}
+    .sidebar::-webkit-scrollbar{width:3px;}
+    .sidebar::-webkit-scrollbar-track{background:transparent;}
+    .sidebar::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px;}
+    .filter-section{margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid var(--border);}
+    .filter-section:last-child{border-bottom:none;}
+    .filter-title{font-size:0.7rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;font-weight:700;}
+    .filter-option{display:flex;align-items:center;justify-content:space-between;padding:6px 0;cursor:pointer;transition:color 0.3s;}
+    .filter-option:hover .fo-label{color:var(--gold-light);}
+    .fo-label{font-size:0.85rem;color:var(--muted);}
+    .fo-count{font-size:0.7rem;color:rgba(158,139,106,0.5);}
+    .fo-check{width:16px;height:16px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.6rem;color:var(--gold);flex-shrink:0;}
+    .filter-option.checked .fo-check{background:rgba(200,150,42,0.2);border-color:var(--gold);}
+    .filter-option.checked .fo-label{color:var(--text);}
+    .price-range{margin-top:0.5rem;}
+    .price-inputs{display:flex;gap:0.5rem;margin-bottom:0.7rem;}
+    .price-inputs input{background:rgba(44,32,16,0.5);border:1px solid var(--border);color:var(--text);padding:6px 10px;font-family:'Rajdhani',sans-serif;font-size:0.85rem;width:100%;outline:none;}
+    .range-slider{width:100%;-webkit-appearance:none;height:2px;background:linear-gradient(90deg,var(--gold) 0%,var(--gold) 60%,rgba(200,150,42,0.2) 60%);outline:none;cursor:pointer;}
+    .range-slider::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--gold-light);cursor:pointer;}
+    .material-swatches{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.3rem;}
+    .swatch{width:32px;height:32px;border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:border-color 0.3s;}
+    .swatch:hover,.swatch.active{border-color:var(--gold);}
+    .rating-row{display:flex;align-items:center;gap:0.5rem;padding:5px 0;cursor:pointer;}
+    .stars-sm{color:var(--gold);font-size:0.75rem;}
+    .rating-label{font-size:0.8rem;color:var(--muted);}
+
+    /* PRODUCTS AREA */
+    .products-area{padding:1.8rem 2rem;}
+    .shop-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;}
+    .result-count{font-size:0.82rem;color:var(--muted);}
+    .result-count strong{color:var(--text);}
+    .toolbar-right{display:flex;align-items:center;gap:1rem;}
+    .sort-select{background:rgba(44,32,16,0.5);border:1px solid var(--border);color:var(--text);padding:7px 12px;font-family:'Rajdhani',sans-serif;font-size:0.82rem;outline:none;cursor:pointer;}
+    .view-toggle{display:flex;gap:0.3rem;}
+    .view-btn{background:rgba(44,32,16,0.4);border:1px solid var(--border);color:var(--muted);width:32px;height:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;font-size:0.8rem;}
+    .view-btn.active{background:rgba(200,150,42,0.15);border-color:var(--gold);color:var(--gold);}
+    .active-filters{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1.2rem;}
+    .filter-tag{display:flex;align-items:center;gap:0.4rem;background:rgba(200,150,42,0.1);border:1px solid rgba(200,150,42,0.3);padding:4px 10px;font-size:0.72rem;color:var(--gold);}
+    .filter-tag button{background:none;border:none;color:var(--muted);cursor:pointer;font-size:0.7rem;padding:0;}
+    .filter-tag button:hover{color:var(--accent);}
+    .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.3rem;}
+
+    /* PRODUCT CARD */
+    .product-card{background:linear-gradient(145deg,rgba(44,32,16,0.6),rgba(26,19,8,0.8));border:1px solid var(--border);overflow:hidden;cursor:pointer;transition:transform 0.3s,border-color 0.3s;position:relative;}
+    .product-card:hover{transform:translateY(-4px);border-color:var(--border-hover);}
+    .product-img{height:185px;background:linear-gradient(135deg,rgba(44,32,16,0.9),rgba(13,10,6,0.95));display:flex;align-items:center;justify-content:center;font-size:3.2rem;position:relative;overflow:hidden;}
+    .product-img::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(13,10,6,0.5));}
+    .p-badge{position:absolute;top:10px;left:10px;background:var(--accent);color:#fff;font-size:0.57rem;padding:3px 7px;letter-spacing:0.1em;text-transform:uppercase;font-weight:700;z-index:2;}
+    .p-new{background:#2d6a35;}
+    .p-wish{position:absolute;top:10px;right:10px;background:rgba(13,10,6,0.7);border:1px solid var(--border);color:var(--muted);width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2;font-size:0.8rem;transition:all 0.3s;}
+    .p-wish:hover{color:var(--accent);border-color:var(--accent);}
+    .product-info{padding:1rem;border-top:1px solid var(--border);}
+    .p-name{font-size:0.9rem;font-weight:600;color:var(--text);margin-bottom:2px;}
+    .p-mat{font-size:0.68rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.6rem;}
+    .p-footer{display:flex;align-items:center;justify-content:space-between;}
+    .price{font-family:'Cinzel Decorative',serif;font-size:1rem;color:var(--gold-light);}
+    .price-old{font-size:0.7rem;color:var(--muted);text-decoration:line-through;margin-left:4px;}
+    .add-btn{background:rgba(200,150,42,0.12);border:1px solid rgba(200,150,42,0.3);color:var(--gold);width:32px;height:32px;cursor:pointer;font-size:0.9rem;display:flex;align-items:center;justify-content:center;transition:background 0.3s;}
+    .add-btn:hover{background:rgba(200,150,42,0.28);}
+    .p-rating{display:flex;align-items:center;gap:0.3rem;margin-bottom:0.5rem;}
+    .stars-s{color:var(--gold);font-size:0.65rem;}
+    .rev-count{font-size:0.65rem;color:var(--muted);}
+
+    /* PAGINATION */
+    .pagination{display:flex;align-items:center;justify-content:center;gap:0.4rem;padding:2.5rem 0 1rem;}
+    .pg-btn{background:rgba(44,32,16,0.4);border:1px solid var(--border);color:var(--muted);width:36px;height:36px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-size:0.85rem;transition:all 0.3s;text-decoration:none;}
+    .pg-btn:hover,.pg-btn.active{background:rgba(200,150,42,0.15);border-color:var(--gold);color:var(--gold-light);}
+
+    /* FOOTER */
+    footer{background:var(--dark);border-top:1px solid var(--border);padding:50px 5% 25px;}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem;margin-bottom:2rem;}
+    .footer-brand p{color:var(--muted);font-size:0.82rem;line-height:1.7;margin-top:0.8rem;max-width:240px;}
+    .footer-contact{margin-top:1rem;display:flex;flex-direction:column;gap:0.4rem;}
+    .contact-item{display:flex;align-items:center;gap:0.5rem;font-size:0.78rem;color:var(--muted);}
+    .contact-item span:first-child{color:var(--gold);}
+    .footer-col h4{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+    .footer-col ul{list-style:none;}
+    .footer-col li{margin-bottom:0.5rem;}
+    .footer-col a{color:var(--muted);text-decoration:none;font-size:0.82rem;transition:color 0.3s;}
+    .footer-col a:hover{color:var(--gold-light);}
+    .footer-bottom{padding-top:1.5rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.8rem;}
+    .footer-bottom p{color:var(--muted);font-size:0.73rem;}
+    .pay-badges{display:flex;gap:0.4rem;flex-wrap:wrap;}
+    .pay-badge{background:rgba(200,150,42,0.08);border:1px solid var(--border);padding:3px 8px;font-size:0.6rem;letter-spacing:0.1em;color:var(--muted);text-transform:uppercase;}
+    .wa-float{position:fixed;bottom:24px;right:24px;z-index:500;background:#25D366;color:#fff;width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.3s;}
+    .wa-float:hover{transform:scale(1.1);}
+    @media(max-width:900px){nav{display:none;}.shop-layout{grid-template-columns:1fr;}.sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);}.footer-grid{grid-template-columns:1fr 1fr;}}
+    @media(max-width:600px){.footer-grid{grid-template-columns:1fr;}}
+  </style>
+</head>
+<body>
+<div class="announcement">🔥 Free shipping above ₹999 &nbsp;|&nbsp; Use code <strong>DIWALI20</strong> for 20% off &nbsp;|&nbsp; COD Available</div>
+<header>
+  <a href="index.html" class="logo"><span class="logo-main">MakersKatte</span><span class="logo-sub">लेज़र शिल्पकला • India</span></a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="shop.html" class="active">Shop</a>
+    <a href="categories.html">Categories</a>
+    <a href="custom-order.html">Custom Order</a>
+    <a href="about.html">About</a>
+  </nav>
+  <div class="nav-icons">
+    <button class="nav-icon">🔍</button>
+    <button class="nav-icon" style="position:relative;">❤️<span class="nbadge">4</span></button>
+    <button class="nav-icon" style="position:relative;">🛒<span class="nbadge">2</span></button>
+    <a href="login.html" class="btn-sm">Login</a>
+  </div>
+</header>
+
+<div class="breadcrumb">
+  <a href="index.html">Home</a> › <span>Shop</span>
+</div>
+
+<div class="shop-layout">
+  <!-- SIDEBAR FILTERS -->
+  <aside class="sidebar">
+    <div class="filter-section">
+      <div class="filter-title">Categories</div>
+      <div class="filter-option checked" onclick="this.classList.toggle('checked')">
+        <div><div class="fo-check">✓</div></div>
+        <div class="fo-label">Wood Engravings</div>
+        <div class="fo-count">124</div>
+      </div>
+      <div class="filter-option" onclick="this.classList.toggle('checked')">
+        <div><div class="fo-check"></div></div>
+        <div class="fo-label">Acrylic / LED</div>
+        <div class="fo-count">89</div>
+      </div>
+      <div class="filter-option" onclick="this.classList.toggle('checked')">
+        <div><div class="fo-check"></div></div>
+        <div class="fo-label">Leather Items</div>
+        <div class="fo-count">56</div>
+      </div>
+      <div class="filter-option" onclick="this.classList.toggle('checked')">
+        <div><div class="fo-check"></div></div>
+        <div class="fo-label">Wedding Gifts</div>
+        <div class="fo-count">210</div>
+      </div>
+      <div class="filter-option" onclick="this.classList.toggle('checked')">
+        <div><div class="fo-check"></div></div>
+        <div class="fo-label">Corporate Awards</div>
+        <div class="fo-count">78</div>
+      </div>
+      <div class="filter-option" onclick="this.classList.toggle('checked')">
+        <div><div class="fo-check"></div></div>
+        <div class="fo-label">Festival Gifts</div>
+        <div class="fo-count">165</div>
+      </div>
+      <div class="filter-option" onclick="this.classList.toggle('checked')">
+        <div><div class="fo-check"></div></div>
+        <div class="fo-label">Name Plates</div>
+        <div class="fo-count">93</div>
+      </div>
+    </div>
+
+    <div class="filter-section">
+      <div class="filter-title">Price Range (₹)</div>
+      <div class="price-range">
+        <div class="price-inputs">
+          <input type="number" value="299" placeholder="Min"/>
+          <input type="number" value="5000" placeholder="Max"/>
+        </div>
+        <input type="range" class="range-slider" min="0" max="10000" value="6000"/>
+      </div>
+    </div>
+
+    <div class="filter-section">
+      <div class="filter-title">Material</div>
+      <div class="material-swatches">
+        <div class="swatch active" title="Wood">🪵</div>
+        <div class="swatch" title="Acrylic">🔷</div>
+        <div class="swatch" title="Leather">🏷️</div>
+        <div class="swatch" title="Crystal">💎</div>
+        <div class="swatch" title="Bamboo">🎋</div>
+        <div class="swatch" title="Metal">⚙️</div>
+      </div>
+    </div>
+
+    <div class="filter-section">
+      <div class="filter-title">Rating</div>
+      <div class="rating-row"><span class="stars-sm">★★★★★</span><span class="rating-label">5 Star (246)</span></div>
+      <div class="rating-row"><span class="stars-sm">★★★★☆</span><span class="rating-label">4+ Star (389)</span></div>
+      <div class="rating-row"><span class="stars-sm">★★★☆☆</span><span class="rating-label">3+ Star (512)</span></div>
+    </div>
+
+    <div class="filter-section">
+      <div class="filter-title">Occasion</div>
+      <div class="filter-option" onclick="this.classList.toggle('checked')"><div><div class="fo-check"></div></div><div class="fo-label">Wedding</div></div>
+      <div class="filter-option" onclick="this.classList.toggle('checked')"><div><div class="fo-check"></div></div><div class="fo-label">Birthday</div></div>
+      <div class="filter-option" onclick="this.classList.toggle('checked')"><div><div class="fo-check"></div></div><div class="fo-label">Anniversary</div></div>
+      <div class="filter-option" onclick="this.classList.toggle('checked')"><div><div class="fo-check"></div></div><div class="fo-label">Diwali</div></div>
+      <div class="filter-option" onclick="this.classList.toggle('checked')"><div><div class="fo-check"></div></div><div class="fo-label">Housewarming</div></div>
+      <div class="filter-option" onclick="this.classList.toggle('checked')"><div><div class="fo-check"></div></div><div class="fo-label">Corporate</div></div>
+    </div>
+
+    <div class="filter-section">
+      <div class="filter-title">Delivery</div>
+      <div class="filter-option" onclick="this.classList.toggle('checked')"><div><div class="fo-check"></div></div><div class="fo-label">Express (24hr)</div></div>
+      <div class="filter-option" onclick="this.classList.toggle('checked')"><div><div class="fo-check"></div></div><div class="fo-label">Standard (48hr)</div></div>
+    </div>
+  </aside>
+
+  <!-- PRODUCTS -->
+  <main class="products-area">
+    <div class="shop-toolbar">
+      <div class="result-count">Showing <strong>1–12</strong> of <strong>724</strong> products</div>
+      <div class="toolbar-right">
+        <select class="sort-select">
+          <option>Sort: Popularity</option>
+          <option>Price: Low to High</option>
+          <option>Price: High to Low</option>
+          <option>Newest First</option>
+          <option>Top Rated</option>
+        </select>
+        <div class="view-toggle">
+          <button class="view-btn active">⊞</button>
+          <button class="view-btn">☰</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="active-filters">
+      <div class="filter-tag">Wood Engravings <button>✕</button></div>
+      <div class="filter-tag">₹299 – ₹5000 <button>✕</button></div>
+      <div class="filter-tag">4+ Stars <button>✕</button></div>
+    </div>
+
+    <div class="products-grid" id="productsGrid">
+      <!-- Product Cards -->
+      <div class="product-card">
+        <div class="product-img">🪵<span class="p-badge">Bestseller</span><span class="p-wish">♡</span></div>
+        <div class="product-info">
+          <div class="p-rating"><span class="stars-s">★★★★★</span><span class="rev-count">(312)</span></div>
+          <div class="p-name">Personalised Wooden Photo Frame</div>
+          <div class="p-mat">Teak Wood · A4 Size</div>
+          <div class="p-footer"><div><span class="price">₹749</span><span class="price-old">₹1,199</span></div><button class="add-btn">+</button></div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">🔷<span class="p-badge p-new">New</span><span class="p-wish">♡</span></div>
+        <div class="product-info">
+          <div class="p-rating"><span class="stars-s">★★★★★</span><span class="rev-count">(88)</span></div>
+          <div class="p-name">LED Acrylic Name Plate</div>
+          <div class="p-mat">Transparent Acrylic · USB</div>
+          <div class="p-footer"><div><span class="price">₹1,299</span></div><button class="add-btn">+</button></div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">🏆<span class="p-wish">♡</span></div>
+        <div class="product-info">
+          <div class="p-rating"><span class="stars-s">★★★★☆</span><span class="rev-count">(145)</span></div>
+          <div class="p-name">Crystal Corporate Trophy</div>
+          <div class="p-mat">K9 Crystal · Custom Logo</div>
+          <div class="p-footer"><div><span class="price">₹2,499</span><span class="price-old">₹3,200</span></div><button class="add-btn">+</button></div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">🎴<span class="p-wish">♡</span></div>
+        <div class="product-info">
+          <div class="p-rating"><span class="stars-s">★★★★★</span><span class="rev-count">(201)</span></div>
+          <div class="p-name">Mandala Wall Art Panel</div>
+          <div class="p-mat">MDF Wood · 24×24 Inch</div>
+          <div class="p-footer"><div><span class="price">₹1,899</span></div><button class="add-btn">+</button></div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">🏷️<span class="p-badge">Sale</span><span class="p-wish">♡</span></div>
+        <div class="product-info">
+          <div class="p-rating"><span class="stars-s">★★★★☆</span><span class="rev-count">(78)</span></div>
+          <div class="p-name">Engraved Leather Wallet</div>
+          <div class="p-mat">Genuine Leather · Monogram</div>
+          <div class="p-footer"><div><span class="price">₹899</span><span class="price-old">₹1,400</span></div><button class="add-btn">+</button></div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">🎋<span class="p-wish">♡</span></div>
+        <div class="product-info">
+          <div class="p-rating"><span class="stars-s">★★★★★</span><span class="rev-count">(93)</span></div>
+          <div class="p-name">Bamboo Business Card Holder</div>
+          <div class="p-mat">Eco Bamboo · Logo</div>
+          <div class="p-footer"><div><span class="price">₹549</span></div><button class="add-btn">+</button></div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">🕯️<span class="p-badge">Sale</span><span class="p-wish">♡</span></div>
+        <div class="product-info">
+          <div class="p-rating"><span class="stars-s">★★★★★</span><span class="rev-count">(167)</span></div>
+          <div class="p-name">Personalised Diya Stand Set</div>
+          <div class="p-mat">Teak Wood · Set of 5</div>
+          <div class="p-footer"><div><span class="price">₹649</span><span class="price-old">₹999</span></div><button class="add-btn">+</button></div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">📿<span class="p-wish">♡</span></div>
+        <div class="product-info">
+          <div class="p-rating"><span class="stars-s">★★★★☆</span><span class="rev-count">(54)</span></div>
+          <div class="p-name">Engraved Keychain Set</div>
+          <div class="p-mat">Acrylic · Pack of 2</div>
+          <div class="p-footer"><div><span class="price">₹299</span></div><button class="add-btn">+</button></div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">🗂️<span class="p-badge p-new">New</span><span class="p-wish">♡</span></div>
+        <div class="product-info">
+          <div class="p-rating"><span class="stars-s">★★★★★</span><span class="rev-count">(29)</span></div>
+          <div class="p-name">Wedding Card Box Engraved</div>
+          <div class="p-mat">Sheesham Wood · Custom</div>
+          <div class="p-footer"><div><span class="price">₹3,499</span></div><button class="add-btn">+</button></div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">☕<span class="p-wish">♡</span></div>
+        <div class="product-info">
+          <div class="p-rating"><span class="stars-s">★★★★★</span><span class="rev-count">(188)</span></div>
+          <div class="p-name">Engraved Wooden Coaster Set</div>
+          <div class="p-mat">Mango Wood · Set of 6</div>
+          <div class="p-footer"><div><span class="price">₹799</span><span class="price-old">₹1,100</span></div><button class="add-btn">+</button></div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">📐<span class="p-wish">♡</span></div>
+        <div class="product-info">
+          <div class="p-rating"><span class="stars-s">★★★★☆</span><span class="rev-count">(41)</span></div>
+          <div class="p-name">Acrylic Office Name Board</div>
+          <div class="p-mat">Frosted Acrylic · A5</div>
+          <div class="p-footer"><div><span class="price">₹999</span></div><button class="add-btn">+</button></div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">🎀<span class="p-badge">Sale</span><span class="p-wish">♡</span></div>
+        <div class="product-info">
+          <div class="p-rating"><span class="stars-s">★★★★★</span><span class="rev-count">(223)</span></div>
+          <div class="p-name">Anniversary Gift Hamper Box</div>
+          <div class="p-mat">Wood + Leather · Combo</div>
+          <div class="p-footer"><div><span class="price">₹2,199</span><span class="price-old">₹3,000</span></div><button class="add-btn">+</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pagination">
+      <a href="#" class="pg-btn">‹</a>
+      <a href="#" class="pg-btn active">1</a>
+      <a href="#" class="pg-btn">2</a>
+      <a href="#" class="pg-btn">3</a>
+      <span style="color:var(--muted);padding:0 4px;">...</span>
+      <a href="#" class="pg-btn">61</a>
+      <a href="#" class="pg-btn">›</a>
+    </div>
+  </main>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="logo"><span class="logo-main">MakersKatte</span><span class="logo-sub">India</span></a>
+      <p>Precision laser engraving crafted with love in India. Serving individuals, businesses and brands nationwide.</p>
+      <div class="footer-contact">
+        <div class="contact-item"><span>📍</span><span>Mysuru, Karnataka – 560001</span></div>
+        <div class="contact-item"><span>📞</span><span>+91 8095047273</span></div>
+      </div>
+    </div>
+    <div class="footer-col"><h4>Shop</h4><ul><li><a href="shop.html">All Products</a></li><li><a href="categories.html">Categories</a></li><li><a href="custom-order.html">Custom Order</a></li><li><a href="#">Bulk Orders</a></li><li><a href="#">New Arrivals</a></li></ul></div>
+    <div class="footer-col"><h4>Help</h4><ul><li><a href="#">Track Order</a></li><li><a href="#">Returns</a></li><li><a href="#">FAQs</a></li><li><a href="#">Sizing Guide</a></li><li><a href="contact.html">Contact Us</a></li></ul></div>
+    <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="#">Blog</a></li><li><a href="#">Careers</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 MakersKatte India Pvt. Ltd. · GST: 29XXXXX1234Z1ZX</p>
+    <div class="pay-badges"><span class="pay-badge">UPI</span><span class="pay-badge">Razorpay</span><span class="pay-badge">Net Banking</span><span class="pay-badge">EMI</span><span class="pay-badge">COD</span></div>
+  </div>
+</footer>
+
+<a href="https://wa.me/918095047273" class="wa-float" title="Chat on WhatsApp">💬</a>
+</body>
+</html>

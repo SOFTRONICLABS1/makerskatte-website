@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Custom Order – MakersKatte India</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Rajdhani:wght@300;400;500;600;700&family=Noto+Sans+Devanagari:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--gold:#C8962A;--gold-light:#E8B84B;--deep:#0D0A06;--dark:#1A1308;--text:#F0E6CC;--muted:#9E8B6A;--accent:#D4380D;--success:#3d9e4a;--border:rgba(200,150,42,0.15);--border-hover:rgba(200,150,42,0.35);}
+    *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+    body{font-family:'Rajdhani',sans-serif;background:var(--deep);color:var(--text);overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.6;}
+    .announcement{background:linear-gradient(90deg,var(--gold) 0%,var(--gold-light) 50%,var(--gold) 100%);background-size:200% 100%;animation:shimmer 4s linear infinite;text-align:center;padding:8px;font-size:0.72rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#0D0A06;}
+    @keyframes shimmer{to{background-position:-200% 0;}}
+    header{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 5%;background:rgba(13,10,6,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+    .logo{display:flex;flex-direction:column;line-height:1;text-decoration:none;}
+    .logo-main{font-family:'Cinzel Decorative',serif;font-size:1.35rem;color:var(--gold-light);}
+    .logo-sub{font-family:'Noto Sans Devanagari',sans-serif;font-size:0.58rem;color:var(--muted);letter-spacing:0.25em;text-transform:uppercase;margin-top:2px;}
+    nav{display:flex;align-items:center;gap:1.8rem;}
+    nav a{color:var(--muted);text-decoration:none;font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:600;transition:color 0.3s;position:relative;}
+    nav a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform 0.3s;}
+    nav a:hover,nav a.active{color:var(--gold-light);}nav a:hover::after,nav a.active::after{transform:scaleX(1);}
+    .nav-icons{display:flex;align-items:center;gap:1rem;}
+    .nav-icon{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;position:relative;}
+    .nav-icon:hover{color:var(--gold-light);}
+    .nbadge{position:absolute;top:-6px;right:-6px;background:var(--accent);color:#fff;font-size:0.5rem;width:15px;height:15px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;}
+    .btn-sm{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#0D0A06;border:none;padding:8px 16px;font-family:'Rajdhani',sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-block;}
+    .breadcrumb{padding:14px 5%;display:flex;align-items:center;gap:0.5rem;font-size:0.73rem;color:var(--muted);border-bottom:1px solid var(--border);}
+    .breadcrumb a{color:var(--muted);text-decoration:none;}.breadcrumb a:hover{color:var(--gold);}.breadcrumb span{color:var(--gold);}
+
+    .page-hero{padding:55px 5% 45px;background:linear-gradient(135deg,rgba(26,19,8,0.8),rgba(13,10,6,1));border-bottom:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;position:relative;overflow:hidden;}
+    .page-hero::before{content:'';position:absolute;right:0;top:0;bottom:0;width:50%;background:radial-gradient(ellipse at right,rgba(200,150,42,0.06),transparent 70%);}
+    .eyebrow{font-size:0.68rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:0.5rem;}
+    .page-hero h1{font-family:'Cinzel Decorative',serif;font-size:clamp(1.5rem,2.8vw,2.5rem);color:#FDF8EE;}
+    .page-hero h1 span{color:var(--gold-light);}
+    .page-hero p{color:var(--muted);margin-top:0.5rem;font-size:0.95rem;font-weight:300;line-height:1.7;}
+    .hero-steps{display:flex;flex-direction:column;gap:1rem;}
+    .h-step{display:flex;align-items:center;gap:1rem;padding:1rem 1.2rem;background:rgba(44,32,16,0.4);border:1px solid var(--border);border-left:3px solid var(--gold);}
+    .h-step-num{font-family:'Cinzel Decorative',serif;font-size:1.2rem;color:var(--gold-light);flex-shrink:0;width:30px;}
+    .h-step-info h4{font-size:0.82rem;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:0.08em;}
+    .h-step-info p{font-size:0.75rem;color:var(--muted);margin-top:2px;}
+
+    /* MAIN FORM AREA */
+    .custom-layout{display:grid;grid-template-columns:1fr 380px;gap:2.5rem;padding:3rem 5%;max-width:1300px;margin:0 auto;}
+
+    .form-card{background:rgba(26,19,8,0.6);border:1px solid var(--border);padding:2rem;margin-bottom:1.5rem;}
+    .form-card h3{font-family:'Cinzel Decorative',serif;font-size:1rem;color:var(--text);margin-bottom:1.5rem;padding-bottom:0.8rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:0.6rem;}
+    label{display:block;font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem;font-weight:600;}
+    input,select,textarea{width:100%;background:rgba(44,32,16,0.4);border:1px solid var(--border);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:0.92rem;padding:10px 14px;outline:none;transition:border-color 0.3s;-webkit-appearance:none;margin-bottom:1rem;}
+    input:focus,select:focus,textarea:focus{border-color:rgba(200,150,42,0.5);background:rgba(44,32,16,0.6);}
+    input::placeholder,textarea::placeholder{color:var(--muted);}
+    select option{background:var(--dark);}
+    textarea{resize:vertical;min-height:100px;margin-bottom:0;}
+    .form-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+    .form-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;}
+    .form-grid-2 input,.form-grid-2 select,.form-grid-3 input,.form-grid-3 select{margin-bottom:0;}
+
+    /* MATERIAL SELECTOR */
+    .material-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:0.8rem;margin-bottom:1rem;}
+    .mat-option{background:rgba(44,32,16,0.4);border:1px solid var(--border);padding:1rem;text-align:center;cursor:pointer;transition:all 0.3s;}
+    .mat-option:hover,.mat-option.selected{border-color:var(--gold);background:rgba(200,150,42,0.1);}
+    .mat-icon{font-size:1.8rem;margin-bottom:0.4rem;display:block;}
+    .mat-name{font-size:0.72rem;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:0.08em;}
+    .mat-price{font-size:0.65rem;color:var(--muted);}
+
+    /* UPLOAD ZONE */
+    .upload-zone{border:2px dashed rgba(200,150,42,0.3);padding:2.5rem;text-align:center;cursor:pointer;transition:all 0.3s;background:rgba(44,32,16,0.2);margin-bottom:1rem;position:relative;}
+    .upload-zone:hover{border-color:var(--gold);background:rgba(200,150,42,0.05);}
+    .upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+    .upload-icon{font-size:2.5rem;margin-bottom:0.8rem;}
+    .upload-title{font-size:0.9rem;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.3rem;}
+    .upload-desc{font-size:0.78rem;color:var(--muted);}
+    .upload-formats{display:flex;gap:0.4rem;justify-content:center;flex-wrap:wrap;margin-top:0.8rem;}
+    .fmt-badge{background:rgba(200,150,42,0.1);border:1px solid var(--border);padding:2px 8px;font-size:0.62rem;color:var(--muted);text-transform:uppercase;}
+
+    /* SIZE SELECTOR */
+    .size-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:0.7rem;margin-bottom:1rem;}
+    .size-option{background:rgba(44,32,16,0.4);border:1px solid var(--border);padding:0.8rem 1rem;cursor:pointer;transition:all 0.3s;}
+    .size-option:hover,.size-option.selected{border-color:var(--gold);background:rgba(200,150,42,0.08);}
+    .size-dim{font-size:0.88rem;font-weight:700;color:var(--text);}
+    .size-cm{font-size:0.7rem;color:var(--muted);}
+    .size-add{font-size:0.68rem;color:var(--gold);}
+
+    /* QUANTITY & URGENCY */
+    .qty-urgency{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+
+    /* SIDEBAR SUMMARY */
+    .side-summary{position:sticky;top:90px;height:fit-content;display:flex;flex-direction:column;gap:1.2rem;}
+    .ss-card{background:rgba(26,19,8,0.8);border:1px solid var(--border);padding:1.5rem;}
+    .ss-title{font-family:'Cinzel Decorative',serif;font-size:0.95rem;color:var(--text);margin-bottom:1.2rem;padding-bottom:0.7rem;border-bottom:1px solid var(--border);}
+    .ss-row{display:flex;justify-content:space-between;font-size:0.83rem;margin-bottom:0.6rem;}
+    .ss-row .lbl{color:var(--muted);}
+    .ss-row .val{color:var(--text);font-weight:600;}
+    .ss-price{display:flex;justify-content:space-between;padding-top:0.8rem;border-top:1px solid var(--border);margin-top:0.5rem;}
+    .ss-price .lbl{font-size:0.88rem;font-weight:700;color:var(--text);}
+    .ss-price .val{font-family:'Cinzel Decorative',serif;font-size:1.3rem;color:var(--gold-light);}
+    .btn-submit{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#0D0A06;border:none;padding:15px;font-family:'Rajdhani',sans-serif;font-size:0.9rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));transition:opacity 0.3s;margin-top:1rem;}
+    .btn-submit:hover{opacity:0.88;}
+    .btn-whatsapp{width:100%;background:#25D366;color:#fff;border:none;padding:14px;font-family:'Rajdhani',sans-serif;font-size:0.88rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;transition:opacity 0.3s;margin-top:0.7rem;display:flex;align-items:center;justify-content:center;gap:0.5rem;}
+    .btn-whatsapp:hover{opacity:0.88;}
+
+    /* BULK SECTION */
+    .bulk-section{padding:0 5% 4rem;}
+    .bulk-card{background:linear-gradient(135deg,rgba(200,150,42,0.08),rgba(212,56,13,0.05));border:1px solid rgba(200,150,42,0.25);padding:3rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;position:relative;overflow:hidden;}
+    .bulk-card::before{content:'🏭';position:absolute;right:3%;top:50%;transform:translateY(-50%);font-size:8rem;opacity:0.06;}
+    .bulk-card h2{font-family:'Cinzel Decorative',serif;font-size:1.5rem;color:#FDF8EE;margin-bottom:0.5rem;}
+    .bulk-card h2 span{color:var(--gold-light);}
+    .bulk-card p{color:var(--muted);font-size:0.9rem;line-height:1.6;}
+    .bulk-features{display:flex;flex-direction:column;gap:0.6rem;margin-top:1.2rem;}
+    .bulk-feat{display:flex;align-items:center;gap:0.6rem;font-size:0.82rem;color:var(--muted);}
+    .bulk-feat span:first-child{color:var(--gold);}
+    .bulk-form{background:rgba(26,19,8,0.6);border:1px solid var(--border);padding:1.5rem;}
+    .bulk-form h4{font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;font-weight:700;}
+    .bulk-form input,.bulk-form select,.bulk-form textarea{width:100%;background:rgba(44,32,16,0.5);border:1px solid var(--border);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:0.9rem;padding:10px 13px;outline:none;transition:border-color 0.3s;margin-bottom:0.8rem;-webkit-appearance:none;}
+    .bulk-form input:focus,.bulk-form select:focus,.bulk-form textarea:focus{border-color:rgba(200,150,42,0.5);}
+    .bulk-form textarea{min-height:80px;resize:vertical;}
+    .bulk-btn{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#0D0A06;border:none;padding:14px;font-family:'Rajdhani',sans-serif;font-size:0.88rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;}
+
+    footer{background:var(--dark);border-top:1px solid var(--border);padding:50px 5% 25px;}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem;margin-bottom:2rem;}
+    .footer-brand p{color:var(--muted);font-size:0.82rem;line-height:1.7;margin-top:0.8rem;max-width:240px;}
+    .footer-contact{margin-top:1rem;display:flex;flex-direction:column;gap:0.4rem;}
+    .contact-item{display:flex;align-items:center;gap:0.5rem;font-size:0.78rem;color:var(--muted);}
+    .contact-item span:first-child{color:var(--gold);}
+    .footer-col h4{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+    .footer-col ul{list-style:none;}
+    .footer-col li{margin-bottom:0.5rem;}
+    .footer-col a{color:var(--muted);text-decoration:none;font-size:0.82rem;transition:color 0.3s;}
+    .footer-col a:hover{color:var(--gold-light);}
+    .footer-bottom{padding-top:1.5rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.8rem;}
+    .footer-bottom p{color:var(--muted);font-size:0.73rem;}
+    .pay-badges{display:flex;gap:0.4rem;flex-wrap:wrap;}
+    .pay-badge{background:rgba(200,150,42,0.08);border:1px solid var(--border);padding:3px 8px;font-size:0.6rem;color:var(--muted);text-transform:uppercase;}
+    .wa-float{position:fixed;bottom:24px;right:24px;z-index:500;background:#25D366;color:#fff;width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.3s;}
+    .wa-float:hover{transform:scale(1.1);}
+    @media(max-width:900px){nav{display:none;}.page-hero{grid-template-columns:1fr;}.custom-layout{grid-template-columns:1fr;}.bulk-card{grid-template-columns:1fr;}.form-grid-2,.form-grid-3{grid-template-columns:1fr;}.footer-grid{grid-template-columns:1fr 1fr;}}
+  </style>
+</head>
+<body>
+<div class="announcement">🔥 Bulk orders get up to 40% off &nbsp;|&nbsp; Free design consultation &nbsp;|&nbsp; WhatsApp: +91 98765 43210</div>
+<header>
+  <a href="index.html" class="logo"><span class="logo-main">MakersKatte</span><span class="logo-sub">लेज़र शिल्पकला • India</span></a>
+  <nav><a href="index.html">Home</a><a href="shop.html">Shop</a><a href="categories.html">Categories</a><a href="custom-order.html" class="active">Custom Order</a><a href="about.html">About</a></nav>
+  <div class="nav-icons">
+    <button class="nav-icon">🔍</button>
+    <button class="nav-icon" style="position:relative;">❤️<span class="nbadge">4</span></button>
+    <button class="nav-icon" style="position:relative;">🛒<span class="nbadge">2</span></button>
+    <a href="#" class="btn-sm">Login</a>
+  </div>
+</header>
+<div class="breadcrumb"><a href="index.html">Home</a> › <span>Custom Order</span></div>
+
+<div class="page-hero">
+  <div>
+    <div class="eyebrow">100% Custom Made</div>
+    <h1>Your Design,<br/><span>Your Vision</span></h1>
+    <p>Upload your artwork, logo, or photo — we'll engrave it precisely on your choice of wood, acrylic, leather or crystal. Delivered anywhere in India in 48–72 hours.</p>
+  </div>
+  <div class="hero-steps">
+    <div class="h-step"><div class="h-step-num">1</div><div class="h-step-info"><h4>Choose Material & Size</h4><p>Wood, acrylic, leather, crystal, bamboo</p></div></div>
+    <div class="h-step"><div class="h-step-num">2</div><div class="h-step-info"><h4>Upload Design / Text</h4><p>JPG, PNG, SVG, PDF, or just type your text</p></div></div>
+    <div class="h-step"><div class="h-step-num">3</div><div class="h-step-info"><h4>We Send a Preview</h4><p>Approve the design before we engrave</p></div></div>
+    <div class="h-step"><div class="h-step-num">4</div><div class="h-step-info"><h4>Delivered in 48–72hrs</h4><p>Pan-India shipping with live tracking</p></div></div>
+  </div>
+</div>
+
+<div class="custom-layout">
+  <div>
+    <!-- MATERIAL -->
+    <div class="form-card">
+      <h3>🪵 Choose Material</h3>
+      <div class="material-grid">
+        <div class="mat-option selected" onclick="selMat(this)"><span class="mat-icon">🪵</span><div class="mat-name">Wood</div><div class="mat-price">From ₹499</div></div>
+        <div class="mat-option" onclick="selMat(this)"><span class="mat-icon">🔷</span><div class="mat-name">Acrylic</div><div class="mat-price">From ₹649</div></div>
+        <div class="mat-option" onclick="selMat(this)"><span class="mat-icon">🏷️</span><div class="mat-name">Leather</div><div class="mat-price">From ₹799</div></div>
+        <div class="mat-option" onclick="selMat(this)"><span class="mat-icon">💎</span><div class="mat-name">Crystal</div><div class="mat-price">From ₹1,299</div></div>
+        <div class="mat-option" onclick="selMat(this)"><span class="mat-icon">🎋</span><div class="mat-name">Bamboo</div><div class="mat-price">From ₹449</div></div>
+        <div class="mat-option" onclick="selMat(this)"><span class="mat-icon">⚙️</span><div class="mat-name">Metal</div><div class="mat-price">From ₹999</div></div>
+      </div>
+      <label style="margin-top:0.5rem;">Wood Variant (if applicable)</label>
+      <select><option>Teak (Premium)</option><option>Sheesham</option><option>Mango Wood</option><option>MDF (Budget)</option></select>
+    </div>
+
+    <!-- SIZE -->
+    <div class="form-card">
+      <h3>📐 Select Size</h3>
+      <div class="size-grid">
+        <div class="size-option" onclick="selSize(this)"><div class="size-dim">A5</div><div class="size-cm">14.8 × 21 cm</div><div class="size-add">+ ₹0</div></div>
+        <div class="size-option selected" onclick="selSize(this)"><div class="size-dim">A4</div><div class="size-cm">21 × 29.7 cm</div><div class="size-add">+ ₹150</div></div>
+        <div class="size-option" onclick="selSize(this)"><div class="size-dim">A3</div><div class="size-cm">29.7 × 42 cm</div><div class="size-add">+ ₹350</div></div>
+        <div class="size-option" onclick="selSize(this)"><div class="size-dim">A2</div><div class="size-cm">42 × 59.4 cm</div><div class="size-add">+ ₹700</div></div>
+        <div class="size-option" onclick="selSize(this)"><div class="size-dim">Custom</div><div class="size-cm">Your dimensions</div><div class="size-add">Quote on request</div></div>
+      </div>
+      <label>Custom Dimensions (if selected above)</label>
+      <div class="form-grid-2"><input type="text" placeholder="Width (cm)"/><input type="text" placeholder="Height (cm)"/></div>
+    </div>
+
+    <!-- DESIGN UPLOAD -->
+    <div class="form-card">
+      <h3>🎨 Upload Your Design</h3>
+      <div class="upload-zone">
+        <input type="file" multiple accept=".jpg,.jpeg,.png,.svg,.pdf,.ai,.eps"/>
+        <div class="upload-icon">📁</div>
+        <div class="upload-title">Drop files or click to upload</div>
+        <div class="upload-desc">Supports JPG, PNG, SVG, PDF, AI, EPS · Max 20MB per file</div>
+        <div class="upload-formats">
+          <span class="fmt-badge">JPG</span><span class="fmt-badge">PNG</span>
+          <span class="fmt-badge">SVG</span><span class="fmt-badge">PDF</span>
+          <span class="fmt-badge">AI</span><span class="fmt-badge">EPS</span>
+        </div>
+      </div>
+      <label>Or describe your design / type your text</label>
+      <textarea placeholder="E.g. 'Engrave our family name SHARMA in bold script with a lotus motif below it. Or add exact text you want engraved...'"></textarea>
+      <p style="font-size:0.75rem;color:var(--muted);margin-top:0.5rem;">💡 Tip: Higher resolution images (300+ DPI) give sharper engravings.</p>
+    </div>
+
+    <!-- PERSONALIZATION -->
+    <div class="form-card">
+      <h3>✏️ Personalisation Details</h3>
+      <label>Name / Text Line 1</label>
+      <input type="text" placeholder="e.g. Sharma Family" maxlength="50"/>
+      <label>Text Line 2 (optional)</label>
+      <input type="text" placeholder="e.g. est. 2024" maxlength="50"/>
+      <label>Language Preference</label>
+      <select><option>English</option><option>Hindi (हिंदी)</option><option>Tamil (தமிழ்)</option><option>Telugu (తెలుగు)</option><option>Marathi (मराठी)</option><option>Kannada (ಕನ್ನಡ)</option><option>Bengali</option><option>Gujarati</option></select>
+      <label>Font Style</label>
+      <select><option>Script / Cursive (Elegant)</option><option>Bold Block</option><option>Thin Modern</option><option>Traditional / Serif</option><option>Handwritten Look</option><option>Let us decide (Recommended)</option></select>
+      <label>Special Instructions</label>
+      <textarea placeholder="Any specific requirements, reference images, or design notes..."></textarea>
+    </div>
+
+    <!-- QTY & DELIVERY -->
+    <div class="form-card">
+      <h3>📦 Quantity & Delivery</h3>
+      <div class="qty-urgency">
+        <div><label>Quantity</label><input type="number" min="1" value="1" placeholder="1"/></div>
+        <div><label>Urgency</label>
+          <select>
+            <option>Standard — 48-72 hrs (Free)</option>
+            <option>Express — 24 hrs (+ ₹199)</option>
+            <option>Same Day (Mumbai/Bengaluru only, + ₹399)</option>
+          </select>
+        </div>
+      </div>
+      <label>Gift Wrap</label>
+      <select><option>No gift wrap</option><option>Premium Kraft Box (Free)</option><option>Luxury Gift Box (+ ₹99)</option></select>
+      <label>Gift Message (optional)</label>
+      <input type="text" placeholder="Message to include in the package..."/>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="form-card">
+      <h3>👤 Your Details</h3>
+      <div class="form-grid-2">
+        <div><label>Full Name</label><input type="text" placeholder="Priya Sharma"/></div>
+        <div><label>Mobile</label><input type="tel" placeholder="+91 98765 43210"/></div>
+        <div><label>Email</label><input type="email" placeholder="priya@email.com"/></div>
+        <div><label>City / State</label><input type="text" placeholder="Bengaluru, Karnataka"/></div>
+      </div>
+      <label>Delivery Address</label>
+      <textarea placeholder="Full delivery address with PIN code..." style="min-height:80px;"></textarea>
+    </div>
+  </div>
+
+  <!-- SIDE SUMMARY -->
+  <div class="side-summary">
+    <div class="ss-card">
+      <div class="ss-title">Order Summary</div>
+      <div class="ss-row"><span class="lbl">Material</span><span class="val">Teak Wood</span></div>
+      <div class="ss-row"><span class="lbl">Size</span><span class="val">A4</span></div>
+      <div class="ss-row"><span class="lbl">Quantity</span><span class="val">1</span></div>
+      <div class="ss-row"><span class="lbl">Delivery</span><span class="val">Standard · Free</span></div>
+      <div class="ss-row"><span class="lbl">Gift Wrap</span><span class="val">Kraft Box · Free</span></div>
+      <div class="ss-row"><span class="lbl">Design Preview</span><span class="val" style="color:var(--success);">Free ✓</span></div>
+      <div class="ss-price"><span class="lbl">Estimated Total</span><span class="val">₹899</span></div>
+      <p style="font-size:0.7rem;color:var(--muted);margin-top:0.5rem;">Final price confirmed after design review</p>
+      <button class="btn-submit" onclick="alert('Order submitted! We\'ll send a design preview within 2 hours 🎨')">Submit Custom Order →</button>
+      <button class="btn-whatsapp">💬 WhatsApp Instead</button>
+    </div>
+
+    <div class="ss-card">
+      <div class="ss-title">Why Choose Us?</div>
+      <div style="display:flex;flex-direction:column;gap:0.7rem;">
+        <div style="display:flex;gap:0.6rem;font-size:0.82rem;color:var(--muted);"><span style="color:var(--gold);">✦</span><span>Free design preview before engraving</span></div>
+        <div style="display:flex;gap:0.6rem;font-size:0.82rem;color:var(--muted);"><span style="color:var(--gold);">✦</span><span>Unlimited revisions till you're happy</span></div>
+        <div style="display:flex;gap:0.6rem;font-size:0.82rem;color:var(--muted);"><span style="color:var(--gold);">✦</span><span>40W CO₂ precision laser equipment</span></div>
+        <div style="display:flex;gap:0.6rem;font-size:0.82rem;color:var(--muted);"><span style="color:var(--gold);">✦</span><span>Hindi, Tamil, Telugu & more scripts</span></div>
+        <div style="display:flex;gap:0.6rem;font-size:0.82rem;color:var(--muted);"><span style="color:var(--gold);">✦</span><span>12,000+ satisfied customers</span></div>
+        <div style="display:flex;gap:0.6rem;font-size:0.82rem;color:var(--muted);"><span style="color:var(--gold);">✦</span><span>Pan-India delivery with tracking</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BULK ENQUIRY -->
+<div class="bulk-section">
+  <div class="bulk-card" id="bulk">
+    <div>
+      <div style="font-size:0.68rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:0.5rem;">For Businesses & Events</div>
+      <h2>Bulk <span>Corporate Orders</span></h2>
+      <p>Planning a corporate event, wedding, or large gifting campaign? We handle 50 to 50,000+ pieces with guaranteed quality, branding consistency, and massive bulk discounts.</p>
+      <div class="bulk-features">
+        <div class="bulk-feat"><span>✦</span><span>Upto 40% off on orders of 100+ pieces</span></div>
+        <div class="bulk-feat"><span>✦</span><span>Dedicated account manager assigned</span></div>
+        <div class="bulk-feat"><span>✦</span><span>GST invoice & corporate billing</span></div>
+        <div class="bulk-feat"><span>✦</span><span>Brand logo & custom packaging available</span></div>
+        <div class="bulk-feat"><span>✦</span><span>Delivery timelines guaranteed in contract</span></div>
+      </div>
+    </div>
+    <div class="bulk-form">
+      <h4>📋 Get a Bulk Quote</h4>
+      <input type="text" placeholder="Your Name"/>
+      <input type="text" placeholder="Company / Organisation Name"/>
+      <input type="tel" placeholder="Mobile Number"/>
+      <input type="email" placeholder="Business Email"/>
+      <select><option>50–100 pieces</option><option>100–500 pieces</option><option>500–1000 pieces</option><option>1000–5000 pieces</option><option>5000+ pieces</option></select>
+      <select><option>Corporate Gifts</option><option>Wedding Favours</option><option>Event Merchandise</option><option>Awards & Trophies</option><option>Promotional Items</option><option>Other</option></select>
+      <textarea placeholder="Describe what you need — product type, material, any specific design..."></textarea>
+      <button class="bulk-btn" onclick="alert('Enquiry submitted! Our team will contact you within 2 hours ✅')">Submit Bulk Enquiry →</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="logo"><span class="logo-main">MakersKatte</span><span class="logo-sub">लेज़र शिल्पकला • India</span></a>
+      <p>Precision laser engraving crafted with love in India.</p>
+      <div class="footer-contact">
+        <div class="contact-item"><span>📍</span><span>Bengaluru, Karnataka</span></div>
+        <div class="contact-item"><span>📞</span><span>+91 98765 43210</span></div>
+      </div>
+    </div>
+    <div class="footer-col"><h4>Shop</h4><ul><li><a href="shop.html">All Products</a></li><li><a href="categories.html">Categories</a></li><li><a href="custom-order.html">Custom Order</a></li></ul></div>
+    <div class="footer-col"><h4>Help</h4><ul><li><a href="#">Track Order</a></li><li><a href="#">Returns</a></li><li><a href="#">FAQs</a></li></ul></div>
+    <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="#">Blog</a></li><li><a href="#">Careers</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 MakersKatte India Pvt. Ltd. · GST: 29XXXXX1234Z1ZX</p>
+    <div class="pay-badges"><span class="pay-badge">UPI</span><span class="pay-badge">Razorpay</span><span class="pay-badge">COD</span><span class="pay-badge">EMI</span></div>
+  </div>
+</footer>
+<a href="https://wa.me/918095047273" class="wa-float">💬</a>
+<script>
+function selMat(el){document.querySelectorAll('.mat-option').forEach(m=>m.classList.remove('selected'));el.classList.add('selected');}
+function selSize(el){document.querySelectorAll('.size-option').forEach(s=>s.classList.remove('selected'));el.classList.add('selected');}
+</script>
+</body>
+</html>

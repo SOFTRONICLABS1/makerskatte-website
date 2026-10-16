@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cart & Checkout – MakersKatte India</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Rajdhani:wght@300;400;500;600;700&family=Noto+Sans+Devanagari:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--gold:#C8962A;--gold-light:#E8B84B;--deep:#0D0A06;--dark:#1A1308;--text:#F0E6CC;--muted:#9E8B6A;--accent:#D4380D;--success:#3d9e4a;--border:rgba(200,150,42,0.15);--border-hover:rgba(200,150,42,0.35);}
+    *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+    body{font-family:'Rajdhani',sans-serif;background:var(--deep);color:var(--text);overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.6;}
+    .announcement{background:linear-gradient(90deg,var(--gold) 0%,var(--gold-light) 50%,var(--gold) 100%);background-size:200% 100%;animation:shimmer 4s linear infinite;text-align:center;padding:8px;font-size:0.72rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#0D0A06;}
+    @keyframes shimmer{to{background-position:-200% 0;}}
+    header{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 5%;background:rgba(13,10,6,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+    .logo{display:flex;flex-direction:column;line-height:1;text-decoration:none;}
+    .logo-main{font-family:'Cinzel Decorative',serif;font-size:1.35rem;color:var(--gold-light);}
+    .logo-sub{font-family:'Noto Sans Devanagari',sans-serif;font-size:0.58rem;color:var(--muted);letter-spacing:0.25em;text-transform:uppercase;margin-top:2px;}
+    nav{display:flex;align-items:center;gap:1.8rem;}
+    nav a{color:var(--muted);text-decoration:none;font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:600;transition:color 0.3s;position:relative;}
+    nav a:hover{color:var(--gold-light);}
+    .nav-icons{display:flex;align-items:center;gap:1rem;}
+    .nav-icon{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;position:relative;}
+    .nbadge{position:absolute;top:-6px;right:-6px;background:var(--accent);color:#fff;font-size:0.5rem;width:15px;height:15px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;}
+    .btn-sm{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#0D0A06;border:none;padding:8px 16px;font-family:'Rajdhani',sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-block;}
+    .breadcrumb{padding:14px 5%;display:flex;align-items:center;gap:0.5rem;font-size:0.73rem;color:var(--muted);border-bottom:1px solid var(--border);}
+    .breadcrumb a{color:var(--muted);text-decoration:none;}.breadcrumb a:hover{color:var(--gold);}.breadcrumb span{color:var(--gold);}
+
+    /* CHECKOUT STEPS */
+    .checkout-steps{display:flex;align-items:center;justify-content:center;gap:0;padding:1.5rem 5%;border-bottom:1px solid var(--border);background:rgba(26,19,8,0.5);}
+    .step-item{display:flex;align-items:center;gap:0.6rem;padding:0 2rem;}
+    .step-num{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.78rem;font-weight:700;flex-shrink:0;}
+    .step-item.done .step-num{background:var(--success);color:#fff;}
+    .step-item.active .step-num{background:var(--gold);color:#0D0A06;}
+    .step-item.pending .step-num{background:rgba(44,32,16,0.6);border:1px solid var(--border);color:var(--muted);}
+    .step-label{font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:600;}
+    .step-item.done .step-label{color:var(--success);}
+    .step-item.active .step-label{color:var(--gold-light);}
+    .step-item.pending .step-label{color:var(--muted);}
+    .step-line{height:1px;width:60px;background:var(--border);}
+    .step-line.done{background:var(--success);}
+
+    /* MAIN LAYOUT */
+    .checkout-layout{display:grid;grid-template-columns:1fr 380px;gap:2.5rem;padding:2.5rem 5%;max-width:1300px;margin:0 auto;}
+
+    /* CART ITEMS */
+    .cart-section h2{font-family:'Cinzel Decorative',serif;font-size:1.2rem;color:var(--text);margin-bottom:1.5rem;}
+    .cart-item{display:grid;grid-template-columns:80px 1fr auto;gap:1.2rem;padding:1.2rem;background:rgba(44,32,16,0.4);border:1px solid var(--border);margin-bottom:0.8rem;align-items:start;transition:border-color 0.3s;}
+    .cart-item:hover{border-color:var(--border-hover);}
+    .ci-img{width:80px;height:80px;background:linear-gradient(135deg,rgba(44,32,16,0.9),rgba(13,10,6,0.95));display:flex;align-items:center;justify-content:center;font-size:2.2rem;flex-shrink:0;}
+    .ci-name{font-size:0.92rem;font-weight:600;color:var(--text);margin-bottom:3px;}
+    .ci-meta{font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem;}
+    .ci-personalize{font-size:0.78rem;color:var(--gold);background:rgba(200,150,42,0.08);border:1px solid var(--border);padding:4px 8px;display:inline-block;margin-bottom:0.6rem;}
+    .ci-actions{display:flex;align-items:center;gap:0.7rem;}
+    .qty-ctrl{display:flex;align-items:center;}
+    .qty-btn{background:rgba(44,32,16,0.5);border:1px solid var(--border);color:var(--gold);width:28px;height:28px;cursor:pointer;font-size:0.85rem;display:flex;align-items:center;justify-content:center;transition:background 0.3s;}
+    .qty-btn:hover{background:rgba(200,150,42,0.15);}
+    .qty-num{background:rgba(44,32,16,0.3);border-top:1px solid var(--border);border-bottom:1px solid var(--border);color:var(--text);width:36px;height:28px;display:flex;align-items:center;justify-content:center;font-size:0.88rem;font-weight:600;}
+    .ci-remove{background:none;border:none;color:var(--muted);cursor:pointer;font-size:0.75rem;text-decoration:underline;transition:color 0.3s;}
+    .ci-remove:hover{color:var(--accent);}
+    .ci-right{text-align:right;flex-shrink:0;}
+    .ci-price{font-family:'Cinzel Decorative',serif;font-size:1.05rem;color:var(--gold-light);}
+    .ci-old{font-size:0.72rem;color:var(--muted);text-decoration:line-through;}
+    .ci-save{font-size:0.68rem;color:var(--success);font-weight:700;}
+
+    /* COUPON */
+    .coupon-row{display:flex;gap:0.7rem;margin-top:1.5rem;padding:1.2rem;background:rgba(26,19,8,0.6);border:1px solid var(--border);}
+    .coupon-input{flex:1;background:rgba(44,32,16,0.4);border:1px solid var(--border);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:0.9rem;padding:10px 14px;outline:none;transition:border-color 0.3s;}
+    .coupon-input:focus{border-color:rgba(200,150,42,0.5);}
+    .coupon-input::placeholder{color:var(--muted);}
+    .coupon-btn{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#0D0A06;border:none;padding:10px 20px;font-family:'Rajdhani',sans-serif;font-size:0.8rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;}
+
+    /* CHECKOUT FORM */
+    .form-section{margin-top:2rem;}
+    .form-section h3{font-family:'Cinzel Decorative',serif;font-size:1rem;color:var(--text);margin-bottom:1.2rem;padding-bottom:0.7rem;border-bottom:1px solid var(--border);}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+    .form-grid.full{grid-template-columns:1fr;}
+    .form-group{margin-bottom:0;}
+    label{display:block;font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem;font-weight:600;}
+    input,select,textarea{width:100%;background:rgba(44,32,16,0.4);border:1px solid var(--border);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:0.92rem;padding:10px 14px;outline:none;transition:border-color 0.3s;-webkit-appearance:none;}
+    input:focus,select:focus,textarea:focus{border-color:rgba(200,150,42,0.5);background:rgba(44,32,16,0.6);}
+    input::placeholder{color:var(--muted);}
+    select option{background:var(--dark);}
+
+    /* PAYMENT */
+    .payment-methods{display:flex;flex-direction:column;gap:0.7rem;margin-top:1rem;}
+    .pay-option{display:flex;align-items:center;gap:1rem;padding:1rem 1.2rem;background:rgba(44,32,16,0.3);border:1px solid var(--border);cursor:pointer;transition:border-color 0.3s;}
+    .pay-option:hover,.pay-option.selected{border-color:var(--gold);background:rgba(200,150,42,0.06);}
+    .pay-radio{width:18px;height:18px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+    .pay-option.selected .pay-radio{border-color:var(--gold);}
+    .pay-radio-inner{width:8px;height:8px;border-radius:50%;background:var(--gold);display:none;}
+    .pay-option.selected .pay-radio-inner{display:block;}
+    .pay-info{flex:1;}
+    .pay-name{font-size:0.88rem;font-weight:600;color:var(--text);}
+    .pay-desc{font-size:0.72rem;color:var(--muted);margin-top:1px;}
+    .pay-icon{font-size:1.4rem;}
+
+    /* ORDER SUMMARY */
+    .order-summary{background:rgba(26,19,8,0.8);border:1px solid var(--border);padding:1.8rem;position:sticky;top:90px;height:fit-content;}
+    .os-title{font-family:'Cinzel Decorative',serif;font-size:1rem;color:var(--text);margin-bottom:1.5rem;padding-bottom:0.8rem;border-bottom:1px solid var(--border);}
+    .os-items{margin-bottom:1.2rem;}
+    .os-item{display:flex;align-items:center;gap:0.8rem;margin-bottom:0.8rem;}
+    .os-thumb{width:40px;height:40px;background:rgba(44,32,16,0.7);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;position:relative;}
+    .os-qty{position:absolute;top:-6px;right:-6px;background:var(--muted);color:#0D0A06;font-size:0.55rem;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;}
+    .os-item-name{flex:1;font-size:0.8rem;color:var(--text);}
+    .os-item-price{font-size:0.85rem;color:var(--gold-light);font-weight:600;}
+    .os-divider{height:1px;background:var(--border);margin:1rem 0;}
+    .os-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.6rem;font-size:0.85rem;}
+    .os-row .label{color:var(--muted);}
+    .os-row .val{color:var(--text);}
+    .os-row.discount .val{color:var(--success);}
+    .os-row.free .val{color:var(--success);}
+    .os-total{display:flex;justify-content:space-between;align-items:center;margin-top:0.8rem;padding-top:0.8rem;border-top:1px solid var(--border);}
+    .os-total .label{font-size:0.9rem;font-weight:700;color:var(--text);}
+    .os-total .val{font-family:'Cinzel Decorative',serif;font-size:1.4rem;color:var(--gold-light);}
+    .os-savings{text-align:center;font-size:0.75rem;color:var(--success);margin:0.8rem 0;padding:0.5rem;background:rgba(61,158,74,0.08);border:1px solid rgba(61,158,74,0.2);}
+    .place-order-btn{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#0D0A06;border:none;padding:16px;font-family:'Rajdhani',sans-serif;font-size:0.95rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));transition:opacity 0.3s;margin-top:1.2rem;}
+    .place-order-btn:hover{opacity:0.88;}
+    .secure-note{display:flex;align-items:center;justify-content:center;gap:0.4rem;margin-top:0.8rem;font-size:0.72rem;color:var(--muted);}
+    .os-trust{display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);}
+    .os-trust-item{font-size:0.68rem;color:var(--muted);display:flex;align-items:center;gap:0.3rem;}
+
+    footer{background:var(--dark);border-top:1px solid var(--border);padding:40px 5% 22px;}
+    .footer-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.8rem;}
+    .footer-bottom p{color:var(--muted);font-size:0.73rem;}
+    .pay-badges{display:flex;gap:0.4rem;flex-wrap:wrap;}
+    .pay-badge{background:rgba(200,150,42,0.08);border:1px solid var(--border);padding:3px 8px;font-size:0.6rem;color:var(--muted);text-transform:uppercase;}
+    .wa-float{position:fixed;bottom:24px;right:24px;z-index:500;background:#25D366;color:#fff;width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.3s;}
+    .wa-float:hover{transform:scale(1.1);}
+    @media(max-width:900px){nav{display:none;}.checkout-layout{grid-template-columns:1fr;}.form-grid{grid-template-columns:1fr;}.checkout-steps{gap:0.3rem;}.step-item{padding:0 1rem;}.step-line{width:30px;}}
+  </style>
+</head>
+<body>
+<div class="announcement">🔥 Free shipping above ₹999 &nbsp;|&nbsp; DIWALI20 for 20% off &nbsp;|&nbsp; COD Available</div>
+<header>
+  <a href="index.html" class="logo"><span class="logo-main">MakersKatte</span><span class="logo-sub">लेज़र शिल्पकला • India</span></a>
+  <nav><a href="index.html">Home</a><a href="shop.html">Shop</a><a href="categories.html">Categories</a><a href="custom-order.html">Custom</a></nav>
+  <div class="nav-icons">
+    <button class="nav-icon">🔍</button>
+    <button class="nav-icon" style="position:relative;">❤️<span class="nbadge">4</span></button>
+    <button class="nav-icon" style="position:relative;">🛒<span class="nbadge">2</span></button>
+    <a href="#" class="btn-sm">Login</a>
+  </div>
+</header>
+
+<div class="breadcrumb">
+  <a href="index.html">Home</a> › <a href="shop.html">Shop</a> › <span>Cart & Checkout</span>
+</div>
+
+<!-- STEPS -->
+<div class="checkout-steps">
+  <div class="step-item done"><div class="step-num">✓</div><div class="step-label">Cart</div></div>
+  <div class="step-line done"></div>
+  <div class="step-item active"><div class="step-num">2</div><div class="step-label">Address</div></div>
+  <div class="step-line"></div>
+  <div class="step-item pending"><div class="step-num">3</div><div class="step-label">Payment</div></div>
+  <div class="step-line"></div>
+  <div class="step-item pending"><div class="step-num">4</div><div class="step-label">Confirm</div></div>
+</div>
+
+<div class="checkout-layout">
+  <div>
+    <!-- CART -->
+    <div class="cart-section">
+      <h2>Your Cart (2 Items)</h2>
+
+      <div class="cart-item">
+        <div class="ci-img">🪵</div>
+        <div>
+          <div class="ci-name">Personalised Wooden Photo Frame</div>
+          <div class="ci-meta">Teak Wood · A4 Size · Engraved</div>
+          <div class="ci-personalize">✏️ "Priya & Rahul · 14 Feb 2025"</div>
+          <div class="ci-actions">
+            <div class="qty-ctrl">
+              <button class="qty-btn" onclick="chQ(this,-1)">−</button>
+              <div class="qty-num">1</div>
+              <button class="qty-btn" onclick="chQ(this,1)">+</button>
+            </div>
+            <button class="ci-remove">Remove</button>
+            <button class="ci-remove" style="color:var(--gold);">Save for Later</button>
+          </div>
+        </div>
+        <div class="ci-right">
+          <div class="ci-price">₹749</div>
+          <div class="ci-old">₹1,199</div>
+          <div class="ci-save">You save ₹450</div>
+        </div>
+      </div>
+
+      <div class="cart-item">
+        <div class="ci-img">🔷</div>
+        <div>
+          <div class="ci-name">LED Acrylic Name Plate</div>
+          <div class="ci-meta">Transparent Acrylic · USB Powered</div>
+          <div class="ci-personalize">✏️ "Sharma Residence"</div>
+          <div class="ci-actions">
+            <div class="qty-ctrl">
+              <button class="qty-btn" onclick="chQ(this,-1)">−</button>
+              <div class="qty-num">1</div>
+              <button class="qty-btn" onclick="chQ(this,1)">+</button>
+            </div>
+            <button class="ci-remove">Remove</button>
+          </div>
+        </div>
+        <div class="ci-right">
+          <div class="ci-price">₹1,299</div>
+          <div class="ci-save" style="color:var(--muted);">No discount</div>
+        </div>
+      </div>
+
+      <div class="coupon-row">
+        <input class="coupon-input" type="text" placeholder="Enter coupon code (e.g. DIWALI20)"/>
+        <button class="coupon-btn">Apply</button>
+      </div>
+    </div>
+
+    <!-- ADDRESS FORM -->
+    <div class="form-section">
+      <h3>📍 Delivery Address</h3>
+      <div class="form-grid" style="gap:1rem;">
+        <div class="form-group"><label>First Name</label><input type="text" placeholder="Priya"/></div>
+        <div class="form-group"><label>Last Name</label><input type="text" placeholder="Sharma"/></div>
+        <div class="form-group"><label>Mobile Number</label><input type="tel" placeholder="+91 98765 43210"/></div>
+        <div class="form-group"><label>Alternate Mobile</label><input type="tel" placeholder="Optional"/></div>
+      </div>
+      <div style="margin-top:1rem;">
+        <div class="form-group" style="margin-bottom:1rem;"><label>Address Line 1</label><input type="text" placeholder="Flat / House No., Building Name"/></div>
+        <div class="form-group" style="margin-bottom:1rem;"><label>Address Line 2</label><input type="text" placeholder="Street, Area, Locality"/></div>
+      </div>
+      <div class="form-grid" style="gap:1rem;margin-top:0;">
+        <div class="form-group"><label>City</label><input type="text" placeholder="Bengaluru"/></div>
+        <div class="form-group"><label>State</label>
+          <select>
+            <option>Karnataka</option><option>Maharashtra</option><option>Delhi</option>
+            <option>Tamil Nadu</option><option>Telangana</option><option>Gujarat</option>
+            <option>Rajasthan</option><option>Uttar Pradesh</option>
+          </select>
+        </div>
+        <div class="form-group"><label>PIN Code</label><input type="text" placeholder="560001" maxlength="6"/></div>
+        <div class="form-group"><label>Address Type</label>
+          <select><option>Home</option><option>Office</option><option>Other</option></select>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAYMENT -->
+    <div class="form-section">
+      <h3>💳 Payment Method</h3>
+      <div class="payment-methods">
+        <div class="pay-option selected" onclick="selectPay(this)">
+          <div class="pay-radio"><div class="pay-radio-inner"></div></div>
+          <div class="pay-info"><div class="pay-name">UPI / GPay / PhonePe</div><div class="pay-desc">Instant payment · No charges</div></div>
+          <div class="pay-icon">📱</div>
+        </div>
+        <div class="pay-option" onclick="selectPay(this)">
+          <div class="pay-radio"><div class="pay-radio-inner"></div></div>
+          <div class="pay-info"><div class="pay-name">Credit / Debit Card</div><div class="pay-desc">Visa, Mastercard, RuPay · EMI available</div></div>
+          <div class="pay-icon">💳</div>
+        </div>
+        <div class="pay-option" onclick="selectPay(this)">
+          <div class="pay-radio"><div class="pay-radio-inner"></div></div>
+          <div class="pay-info"><div class="pay-name">Net Banking</div><div class="pay-desc">All major Indian banks supported</div></div>
+          <div class="pay-icon">🏦</div>
+        </div>
+        <div class="pay-option" onclick="selectPay(this)">
+          <div class="pay-radio"><div class="pay-radio-inner"></div></div>
+          <div class="pay-info"><div class="pay-name">Cash on Delivery (COD)</div><div class="pay-desc">Pay when you receive · ₹50 extra charges</div></div>
+          <div class="pay-icon">💰</div>
+        </div>
+        <div class="pay-option" onclick="selectPay(this)">
+          <div class="pay-radio"><div class="pay-radio-inner"></div></div>
+          <div class="pay-info"><div class="pay-name">EMI (No Cost)</div><div class="pay-desc">3, 6, 9, 12 months · Select banks</div></div>
+          <div class="pay-icon">📅</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ORDER SUMMARY -->
+  <div class="order-summary">
+    <div class="os-title">Order Summary</div>
+    <div class="os-items">
+      <div class="os-item">
+        <div class="os-thumb">🪵<span class="os-qty">1</span></div>
+        <div class="os-item-name">Personalised Wooden Frame<br/><span style="font-size:0.68rem;color:var(--muted);">Teak · A4</span></div>
+        <div class="os-item-price">₹749</div>
+      </div>
+      <div class="os-item">
+        <div class="os-thumb">🔷<span class="os-qty">1</span></div>
+        <div class="os-item-name">LED Acrylic Name Plate<br/><span style="font-size:0.68rem;color:var(--muted);">Transparent Acrylic</span></div>
+        <div class="os-item-price">₹1,299</div>
+      </div>
+    </div>
+    <div class="os-divider"></div>
+    <div class="os-row"><span class="label">Subtotal (2 items)</span><span class="val">₹2,048</span></div>
+    <div class="os-row discount"><span class="label">Product Discount</span><span class="val">− ₹450</span></div>
+    <div class="os-row free"><span class="label">Delivery</span><span class="val">FREE ✓</span></div>
+    <div class="os-row"><span class="label">GST (18%)</span><span class="val">₹288</span></div>
+    <div class="os-row"><span class="label">Gift Wrap</span><span class="val">FREE ✓</span></div>
+    <div class="os-divider"></div>
+    <div class="os-total"><span class="label">Total Payable</span><span class="val">₹1,886</span></div>
+    <div class="os-savings">🎉 You're saving ₹450 on this order!</div>
+    <button class="place-order-btn" onclick="alert('Order placed! 🎉')">Place Order →</button>
+    <div class="secure-note">🔒 100% Secure · SSL Encrypted</div>
+    <div class="os-trust">
+      <div class="os-trust-item">✅ Easy Returns</div>
+      <div class="os-trust-item">🚚 48hr Dispatch</div>
+      <div class="os-trust-item">🎁 Free Gift Wrap</div>
+      <div class="os-trust-item">📞 24/7 Support</div>
+    </div>
+  </div>
+</div>
+
+<footer style="border-top:1px solid rgba(200,150,42,0.15);padding:28px 5%;">
+  <div class="footer-bottom">
+    <p>© 2025 MakersKatte India Pvt. Ltd. · GST: 29XXXXX1234Z1ZX</p>
+    <div class="pay-badges"><span class="pay-badge">UPI</span><span class="pay-badge">Razorpay</span><span class="pay-badge">COD</span><span class="pay-badge">EMI</span><span class="pay-badge">Net Banking</span></div>
+  </div>
+</footer>
+<a href="https://wa.me/918095047273" class="wa-float">💬</a>
+<script>
+function chQ(btn,d){const p=btn.parentElement;const n=p.querySelector('.qty-num');let v=parseInt(n.textContent)+d;if(v<1)v=1;n.textContent=v;}
+function selectPay(el){document.querySelectorAll('.pay-option').forEach(p=>{p.classList.remove('selected');p.querySelector('.pay-radio-inner').style.display='none';});el.classList.add('selected');el.querySelector('.pay-radio-inner').style.display='block';}
+</script>
+</body>
+</html>

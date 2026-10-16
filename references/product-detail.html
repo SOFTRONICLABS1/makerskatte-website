@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Personalised Wooden Photo Frame – MakersKatte India</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Rajdhani:wght@300;400;500;600;700&family=Noto+Sans+Devanagari:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--gold:#C8962A;--gold-light:#E8B84B;--deep:#0D0A06;--dark:#1A1308;--text:#F0E6CC;--muted:#9E8B6A;--accent:#D4380D;--success:#3d9e4a;--white:#FDF8EE;--border:rgba(200,150,42,0.15);--border-hover:rgba(200,150,42,0.35);}
+    *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+    body{font-family:'Rajdhani',sans-serif;background:var(--deep);color:var(--text);overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.6;}
+    .announcement{background:linear-gradient(90deg,var(--gold) 0%,var(--gold-light) 50%,var(--gold) 100%);background-size:200% 100%;animation:shimmer 4s linear infinite;text-align:center;padding:8px;font-size:0.72rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--deep);}
+    @keyframes shimmer{to{background-position:-200% 0;}}
+    header{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 5%;background:rgba(13,10,6,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+    .logo{display:flex;flex-direction:column;line-height:1;text-decoration:none;}
+    .logo-main{font-family:'Cinzel Decorative',serif;font-size:1.35rem;color:var(--gold-light);}
+    .logo-sub{font-family:'Noto Sans Devanagari',sans-serif;font-size:0.58rem;color:var(--muted);letter-spacing:0.25em;text-transform:uppercase;margin-top:2px;}
+    nav{display:flex;align-items:center;gap:1.8rem;}
+    nav a{color:var(--muted);text-decoration:none;font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:600;transition:color 0.3s;position:relative;}
+    nav a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform 0.3s;}
+    nav a:hover{color:var(--gold-light);}nav a:hover::after{transform:scaleX(1);}
+    .nav-icons{display:flex;align-items:center;gap:1rem;}
+    .nav-icon{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;transition:color 0.3s;position:relative;}
+    .nav-icon:hover{color:var(--gold-light);}
+    .nbadge{position:absolute;top:-6px;right:-6px;background:var(--accent);color:#fff;font-size:0.5rem;width:15px;height:15px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;}
+    .btn-sm{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--deep);border:none;padding:8px 16px;font-family:'Rajdhani',sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-block;}
+    .breadcrumb{padding:14px 5%;display:flex;align-items:center;gap:0.5rem;font-size:0.73rem;color:var(--muted);border-bottom:1px solid var(--border);}
+    .breadcrumb a{color:var(--muted);text-decoration:none;}
+    .breadcrumb a:hover{color:var(--gold);}
+    .breadcrumb span{color:var(--gold);}
+
+    /* PRODUCT DETAIL */
+    .pd-layout{display:grid;grid-template-columns:1fr 1fr;gap:4rem;padding:3rem 5%;max-width:1300px;margin:0 auto;}
+
+    /* IMAGE GALLERY */
+    .gallery{display:flex;gap:1rem;}
+    .thumbs{display:flex;flex-direction:column;gap:0.7rem;}
+    .thumb{width:70px;height:70px;background:linear-gradient(135deg,rgba(44,32,16,0.9),rgba(13,10,6,0.95));border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.6rem;cursor:pointer;transition:border-color 0.3s;flex-shrink:0;}
+    .thumb:hover,.thumb.active{border-color:var(--gold);}
+    .main-img{flex:1;background:linear-gradient(135deg,rgba(44,32,16,0.7),rgba(13,10,6,0.9));border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:7rem;aspect-ratio:1;position:relative;overflow:hidden;}
+    .main-img::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(200,150,42,0.08),transparent 70%);}
+    .img-badge{position:absolute;top:14px;left:14px;background:var(--accent);color:#fff;font-size:0.6rem;padding:4px 10px;letter-spacing:0.1em;text-transform:uppercase;font-weight:700;}
+    .zoom-hint{position:absolute;bottom:12px;right:12px;background:rgba(13,10,6,0.7);border:1px solid var(--border);padding:4px 10px;font-size:0.65rem;color:var(--muted);}
+
+    /* PRODUCT INFO */
+    .pd-info{padding-top:0.5rem;}
+    .pd-eyebrow{font-size:0.68rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:0.5rem;}
+    .pd-title{font-family:'Cinzel Decorative',serif;font-size:clamp(1.3rem,2.5vw,2rem);color:var(--white);line-height:1.3;margin-bottom:0.8rem;}
+    .pd-rating{display:flex;align-items:center;gap:0.8rem;margin-bottom:1.2rem;flex-wrap:wrap;}
+    .stars{color:var(--gold);font-size:0.9rem;}
+    .rev-link{font-size:0.8rem;color:var(--muted);text-decoration:underline;cursor:pointer;}
+    .sold-count{font-size:0.78rem;color:var(--muted);padding-left:0.8rem;border-left:1px solid var(--border);}
+    .pd-price{display:flex;align-items:baseline;gap:0.8rem;margin-bottom:1.5rem;padding:1rem 1.2rem;background:rgba(200,150,42,0.06);border:1px solid var(--border);border-left:3px solid var(--gold);}
+    .pd-price .main-price{font-family:'Cinzel Decorative',serif;font-size:2rem;color:var(--gold-light);}
+    .pd-price .old-price{font-size:1rem;color:var(--muted);text-decoration:line-through;}
+    .pd-price .discount{font-size:0.8rem;background:rgba(212,56,13,0.2);color:#e07060;padding:3px 8px;font-weight:700;}
+    .pd-price .tax-note{font-size:0.7rem;color:var(--muted);margin-left:auto;}
+
+    .option-section{margin-bottom:1.4rem;}
+    .option-label{font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:0.6rem;font-weight:700;}
+    .size-options{display:flex;gap:0.5rem;flex-wrap:wrap;}
+    .size-btn{background:rgba(44,32,16,0.4);border:1px solid var(--border);color:var(--muted);padding:7px 14px;font-family:'Rajdhani',sans-serif;font-size:0.82rem;cursor:pointer;transition:all 0.3s;}
+    .size-btn:hover,.size-btn.active{background:rgba(200,150,42,0.15);border-color:var(--gold);color:var(--gold-light);}
+    .size-btn.oos{opacity:0.35;cursor:not-allowed;text-decoration:line-through;}
+    .wood-options{display:flex;gap:0.5rem;}
+    .wood-btn{display:flex;flex-direction:column;align-items:center;gap:4px;background:rgba(44,32,16,0.4);border:1px solid var(--border);padding:8px 12px;cursor:pointer;transition:all 0.3s;}
+    .wood-btn:hover,.wood-btn.active{border-color:var(--gold);}
+    .wood-icon{font-size:1.4rem;}
+    .wood-label{font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;}
+
+    .personalize-box{background:rgba(200,150,42,0.05);border:1px solid var(--border);padding:1.2rem;margin-bottom:1.4rem;}
+    .personalize-box h4{font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem;}
+    .personalize-box input, .personalize-box textarea{width:100%;background:rgba(44,32,16,0.4);border:1px solid var(--border);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:0.9rem;padding:10px 12px;outline:none;transition:border-color 0.3s;margin-bottom:0.7rem;}
+    .personalize-box input:focus,.personalize-box textarea:focus{border-color:rgba(200,150,42,0.5);}
+    .personalize-box textarea{resize:vertical;min-height:80px;}
+    .char-count{font-size:0.68rem;color:var(--muted);text-align:right;margin-top:-0.5rem;margin-bottom:0.7rem;}
+
+    .qty-row{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;}
+    .qty-label{font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);font-weight:700;}
+    .qty-ctrl{display:flex;align-items:center;gap:0;}
+    .qty-btn{background:rgba(44,32,16,0.5);border:1px solid var(--border);color:var(--gold);width:36px;height:36px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:background 0.3s;}
+    .qty-btn:hover{background:rgba(200,150,42,0.15);}
+    .qty-val{background:rgba(44,32,16,0.3);border-top:1px solid var(--border);border-bottom:1px solid var(--border);color:var(--text);width:50px;height:36px;text-align:center;font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:600;display:flex;align-items:center;justify-content:center;}
+
+    .action-btns{display:flex;gap:0.8rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+    .btn-cart{flex:1;min-width:160px;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--deep);border:none;padding:15px 24px;font-family:'Rajdhani',sans-serif;font-size:0.9rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));transition:opacity 0.3s;}
+    .btn-cart:hover{opacity:0.88;}
+    .btn-buy{flex:1;min-width:140px;background:rgba(212,56,13,0.15);border:1px solid rgba(212,56,13,0.5);color:#e07060;padding:14px 24px;font-family:'Rajdhani',sans-serif;font-size:0.9rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;transition:all 0.3s;}
+    .btn-buy:hover{background:rgba(212,56,13,0.25);}
+    .btn-wish{width:50px;background:transparent;border:1px solid var(--border);color:var(--muted);font-size:1.2rem;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;justify-content:center;}
+    .btn-wish:hover{border-color:var(--accent);color:var(--accent);}
+
+    .trust-badges{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem;padding:1rem;background:rgba(26,19,8,0.6);border:1px solid var(--border);}
+    .trust-item{display:flex;align-items:center;gap:0.4rem;font-size:0.72rem;color:var(--muted);}
+    .trust-item span:first-child{font-size:1rem;}
+
+    .delivery-info{background:rgba(61,158,74,0.06);border:1px solid rgba(61,158,74,0.2);padding:1rem 1.2rem;display:flex;gap:1rem;align-items:flex-start;}
+    .delivery-icon{font-size:1.5rem;flex-shrink:0;}
+    .delivery-text h5{font-size:0.8rem;color:#5fc870;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;}
+    .delivery-text p{font-size:0.78rem;color:var(--muted);margin-top:2px;}
+
+    /* TABS */
+    .pd-tabs{padding:0 5%;max-width:1300px;margin:0 auto 3rem;}
+    .tab-nav{display:flex;border-bottom:1px solid var(--border);margin-bottom:2rem;}
+    .tab-btn{background:none;border:none;color:var(--muted);padding:12px 24px;font-family:'Rajdhani',sans-serif;font-size:0.82rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.3s;}
+    .tab-btn.active{color:var(--gold-light);border-bottom-color:var(--gold);}
+    .tab-content{display:none;}
+    .tab-content.active{display:block;}
+    .spec-table{width:100%;border-collapse:collapse;}
+    .spec-table tr{border-bottom:1px solid var(--border);}
+    .spec-table td{padding:10px 16px;font-size:0.88rem;}
+    .spec-table td:first-child{color:var(--muted);width:40%;font-weight:600;letter-spacing:0.05em;}
+    .spec-table td:last-child{color:var(--text);}
+    .review-card{background:rgba(44,32,16,0.4);border:1px solid var(--border);padding:1.2rem;margin-bottom:1rem;}
+    .rev-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;}
+    .rev-name{font-size:0.85rem;font-weight:600;color:var(--text);}
+    .rev-date{font-size:0.7rem;color:var(--muted);}
+    .rev-stars{color:var(--gold);font-size:0.75rem;margin-bottom:0.5rem;}
+    .rev-text{font-size:0.85rem;color:var(--muted);line-height:1.6;}
+    .verified{font-size:0.65rem;color:#5fc870;margin-left:0.5rem;}
+
+    /* RELATED */
+    .related{padding:0 5% 4rem;max-width:1300px;margin:0 auto;}
+    .related h3{font-family:'Cinzel Decorative',serif;font-size:1.4rem;color:var(--white);margin-bottom:1.5rem;}
+    .related h3 span{color:var(--gold-light);}
+    .rel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.2rem;}
+    .product-card{background:linear-gradient(145deg,rgba(44,32,16,0.6),rgba(26,19,8,0.8));border:1px solid var(--border);overflow:hidden;cursor:pointer;transition:transform 0.3s,border-color 0.3s;}
+    .product-card:hover{transform:translateY(-4px);border-color:var(--border-hover);}
+    .product-img{height:160px;background:linear-gradient(135deg,rgba(44,32,16,0.9),rgba(13,10,6,0.95));display:flex;align-items:center;justify-content:center;font-size:3rem;}
+    .product-info{padding:0.9rem;border-top:1px solid var(--border);}
+    .p-name{font-size:0.85rem;font-weight:600;color:var(--text);margin-bottom:2px;}
+    .p-footer{display:flex;align-items:center;justify-content:space-between;margin-top:0.5rem;}
+    .price{font-family:'Cinzel Decorative',serif;font-size:0.95rem;color:var(--gold-light);}
+    .add-btn{background:rgba(200,150,42,0.12);border:1px solid rgba(200,150,42,0.3);color:var(--gold);width:30px;height:30px;cursor:pointer;font-size:0.85rem;display:flex;align-items:center;justify-content:center;}
+
+    footer{background:var(--dark);border-top:1px solid var(--border);padding:50px 5% 25px;}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem;margin-bottom:2rem;}
+    .footer-brand p{color:var(--muted);font-size:0.82rem;line-height:1.7;margin-top:0.8rem;max-width:240px;}
+    .footer-contact{margin-top:1rem;display:flex;flex-direction:column;gap:0.4rem;}
+    .contact-item{display:flex;align-items:center;gap:0.5rem;font-size:0.78rem;color:var(--muted);}
+    .contact-item span:first-child{color:var(--gold);}
+    .footer-col h4{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+    .footer-col ul{list-style:none;}
+    .footer-col li{margin-bottom:0.5rem;}
+    .footer-col a{color:var(--muted);text-decoration:none;font-size:0.82rem;transition:color 0.3s;}
+    .footer-col a:hover{color:var(--gold-light);}
+    .footer-bottom{padding-top:1.5rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.8rem;}
+    .footer-bottom p{color:var(--muted);font-size:0.73rem;}
+    .pay-badges{display:flex;gap:0.4rem;flex-wrap:wrap;}
+    .pay-badge{background:rgba(200,150,42,0.08);border:1px solid var(--border);padding:3px 8px;font-size:0.6rem;color:var(--muted);text-transform:uppercase;}
+    .wa-float{position:fixed;bottom:24px;right:24px;z-index:500;background:#25D366;color:#fff;width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.3s;}
+    .wa-float:hover{transform:scale(1.1);}
+    @media(max-width:900px){nav{display:none;}.pd-layout{grid-template-columns:1fr;gap:2rem;}.gallery{flex-direction:column;}.thumbs{flex-direction:row;}.footer-grid{grid-template-columns:1fr 1fr;}}
+  </style>
+</head>
+<body>
+<div class="announcement">🔥 Free shipping above ₹999 &nbsp;|&nbsp; Use code <strong>DIWALI20</strong> for 20% off &nbsp;|&nbsp; COD Available</div>
+<header>
+  <a href="index.html" class="logo"><span class="logo-main">MakersKatte</span><span class="logo-sub">लेज़र शिल्पकला • India</span></a>
+  <nav>
+    <a href="index.html">Home</a><a href="shop.html">Shop</a><a href="categories.html">Categories</a><a href="custom-order.html">Custom Order</a><a href="about.html">About</a>
+  </nav>
+  <div class="nav-icons">
+    <button class="nav-icon">🔍</button>
+    <button class="nav-icon" style="position:relative;">❤️<span class="nbadge">4</span></button>
+    <button class="nav-icon" style="position:relative;">🛒<span class="nbadge">2</span></button>
+    <a href="login.html" class="btn-sm">Login</a>
+  </div>
+</header>
+
+<div class="breadcrumb">
+  <a href="index.html">Home</a> › <a href="shop.html">Shop</a> › <a href="#">Wood Engravings</a> › <span>Personalised Wooden Photo Frame</span>
+</div>
+
+<div class="pd-layout">
+  <!-- GALLERY -->
+  <div class="gallery">
+    <div class="thumbs">
+      <div class="thumb active">🪵</div>
+      <div class="thumb">🎨</div>
+      <div class="thumb">📐</div>
+      <div class="thumb">🔍</div>
+    </div>
+    <div class="main-img">
+      🪵
+      <span class="img-badge">Bestseller</span>
+      <span class="zoom-hint">🔍 Hover to zoom</span>
+    </div>
+  </div>
+
+  <!-- INFO -->
+  <div class="pd-info">
+    <div class="pd-eyebrow">Wood Engraving · Personalised Gift</div>
+    <h1 class="pd-title">Personalised Wooden Photo Frame</h1>
+    <div class="pd-rating">
+      <span class="stars">★★★★★</span>
+      <span class="rev-link">312 Reviews</span>
+      <span class="sold-count">1,240+ sold</span>
+    </div>
+
+    <div class="pd-price">
+      <span class="main-price">₹749</span>
+      <span class="old-price">₹1,199</span>
+      <span class="discount">38% OFF</span>
+      <span class="tax-note">Incl. GST</span>
+    </div>
+
+    <div class="option-section">
+      <div class="option-label">Size</div>
+      <div class="size-options">
+        <button class="size-btn">5×7"</button>
+        <button class="size-btn active">A4 (8×11")</button>
+        <button class="size-btn">A3 (12×17")</button>
+        <button class="size-btn oos">A2 (17×24")</button>
+      </div>
+    </div>
+
+    <div class="option-section">
+      <div class="option-label">Wood Type</div>
+      <div class="wood-options">
+        <div class="wood-btn active"><span class="wood-icon">🌳</span><span class="wood-label">Teak</span></div>
+        <div class="wood-btn"><span class="wood-icon">🌲</span><span class="wood-label">Sheesham</span></div>
+        <div class="wood-btn"><span class="wood-icon">🌿</span><span class="wood-label">Mango</span></div>
+        <div class="wood-btn"><span class="wood-icon">🎋</span><span class="wood-label">Bamboo</span></div>
+      </div>
+    </div>
+
+    <div class="personalize-box">
+      <h4>✏️ Personalise Your Frame</h4>
+      <input type="text" placeholder="Name / Couple Names (e.g. Priya & Rahul)" maxlength="40"/>
+      <div class="char-count">0 / 40 characters</div>
+      <input type="text" placeholder="Date or Occasion (e.g. 14 Feb 2025)"/>
+      <textarea placeholder="Custom message (optional, max 80 chars)..." maxlength="80"></textarea>
+      <div class="char-count">0 / 80 characters</div>
+    </div>
+
+    <div class="qty-row">
+      <span class="qty-label">Quantity</span>
+      <div class="qty-ctrl">
+        <button class="qty-btn" onclick="changeQty(-1)">−</button>
+        <div class="qty-val" id="qtyVal">1</div>
+        <button class="qty-btn" onclick="changeQty(1)">+</button>
+      </div>
+      <span style="font-size:0.78rem;color:var(--success);">✓ In Stock (43 left)</span>
+    </div>
+
+    <div class="action-btns">
+      <button class="btn-cart">🛒 Add to Cart</button>
+      <button class="btn-buy">⚡ Buy Now</button>
+      <button class="btn-wish">♡</button>
+    </div>
+
+    <div class="trust-badges">
+      <div class="trust-item"><span>🔒</span><span>Secure Payment</span></div>
+      <div class="trust-item"><span>↩️</span><span>Easy Returns</span></div>
+      <div class="trust-item"><span>🎁</span><span>Gift Wrap Free</span></div>
+      <div class="trust-item"><span>📞</span><span>24/7 Support</span></div>
+    </div>
+
+    <div class="delivery-info">
+      <div class="delivery-icon">🚚</div>
+      <div class="delivery-text">
+        <h5>Free Delivery by Monday, 5 Jan</h5>
+        <p>Order within 4 hrs 32 mins · Express dispatch available · Ships to all Indian states</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="pd-tabs">
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab(this,'tab-desc')">Description</button>
+    <button class="tab-btn" onclick="switchTab(this,'tab-specs')">Specifications</button>
+    <button class="tab-btn" onclick="switchTab(this,'tab-reviews')">Reviews (312)</button>
+    <button class="tab-btn" onclick="switchTab(this,'tab-care')">Care Guide</button>
+  </div>
+
+  <div id="tab-desc" class="tab-content active">
+    <p style="color:var(--muted);line-height:1.8;font-size:0.95rem;max-width:800px;">
+      Our Personalised Wooden Photo Frame is crafted with precision laser engraving on premium quality Indian hardwood. Each piece is uniquely made to order, ensuring that your personalised text — names, dates, and messages — are engraved with sharp, permanent clarity that will last a lifetime.
+      <br/><br/>
+      Perfect for anniversaries, weddings, birthdays, or housewarming gifts. The natural grain of the wood makes every frame one-of-a-kind. Delivered with a velvet stand included and premium kraft gift box packaging.
+    </p>
+    <div style="display:flex;gap:2rem;margin-top:2rem;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:0.6rem;font-size:0.85rem;color:var(--muted);">✦ <span>100% natural hardwood</span></div>
+      <div style="display:flex;align-items:center;gap:0.6rem;font-size:0.85rem;color:var(--muted);">✦ <span>Permanent laser engraving</span></div>
+      <div style="display:flex;align-items:center;gap:0.6rem;font-size:0.85rem;color:var(--muted);">✦ <span>Gift box included</span></div>
+      <div style="display:flex;align-items:center;gap:0.6rem;font-size:0.85rem;color:var(--muted);">✦ <span>Made in Bengaluru, India</span></div>
+    </div>
+  </div>
+
+  <div id="tab-specs" class="tab-content">
+    <table class="spec-table">
+      <tr><td>Material</td><td>Premium Teak Wood (Indian Grown)</td></tr>
+      <tr><td>Sizes Available</td><td>5×7", A4 (8×11"), A3 (12×17")</td></tr>
+      <tr><td>Engraving Method</td><td>CO₂ Laser, 40W</td></tr>
+      <tr><td>Finish</td><td>Natural Matte with Wax Polish</td></tr>
+      <tr><td>Frame Thickness</td><td>12mm</td></tr>
+      <tr><td>Photo Fit</td><td>Standard 4×6" photo (inserted from back)</td></tr>
+      <tr><td>Includes</td><td>Velvet Stand, Kraft Gift Box, Bubble Wrap</td></tr>
+      <tr><td>Dispatch Time</td><td>24–48 hours after order confirmation</td></tr>
+      <tr><td>Weight</td><td>~350g (A4 size)</td></tr>
+      <tr><td>Origin</td><td>Made in Bengaluru, Karnataka, India</td></tr>
+    </table>
+  </div>
+
+  <div id="tab-reviews" class="tab-content">
+    <div style="display:flex;gap:3rem;align-items:flex-start;margin-bottom:2rem;flex-wrap:wrap;">
+      <div style="text-align:center;">
+        <div style="font-family:'Cinzel Decorative',serif;font-size:3.5rem;color:var(--gold-light);">4.9</div>
+        <div style="color:var(--gold);font-size:1.1rem;">★★★★★</div>
+        <div style="font-size:0.75rem;color:var(--muted);margin-top:4px;">312 Reviews</div>
+      </div>
+      <div style="flex:1;min-width:200px;">
+        <div style="display:flex;align-items:center;gap:0.7rem;margin-bottom:0.4rem;font-size:0.82rem;color:var(--muted);">5★ <div style="flex:1;height:6px;background:rgba(44,32,16,0.5);"><div style="width:84%;height:100%;background:var(--gold);"></div></div> 84%</div>
+        <div style="display:flex;align-items:center;gap:0.7rem;margin-bottom:0.4rem;font-size:0.82rem;color:var(--muted);">4★ <div style="flex:1;height:6px;background:rgba(44,32,16,0.5);"><div style="width:11%;height:100%;background:var(--gold-light);"></div></div> 11%</div>
+        <div style="display:flex;align-items:center;gap:0.7rem;font-size:0.82rem;color:var(--muted);">3★ <div style="flex:1;height:6px;background:rgba(44,32,16,0.5);"><div style="width:5%;height:100%;background:var(--muted);"></div></div> 5%</div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="rev-header"><span class="rev-name">Priya Menon <span class="verified">✓ Verified Purchase</span></span><span class="rev-date">Dec 2024</span></div>
+      <div class="rev-stars">★★★★★</div>
+      <p class="rev-text">Absolutely gorgeous! Ordered for my parents' anniversary. The engraving quality is perfect — sharp, deep and beautiful. Delivered within 2 days. Will order again for Diwali!</p>
+    </div>
+    <div class="review-card">
+      <div class="rev-header"><span class="rev-name">Arjun S. <span class="verified">✓ Verified Purchase</span></span><span class="rev-date">Nov 2024</span></div>
+      <div class="rev-stars">★★★★★</div>
+      <p class="rev-text">Great quality wood, the teak finish looks premium. They even added a small message I requested outside the template. Packaging was excellent with no damage.</p>
+    </div>
+    <div class="review-card">
+      <div class="rev-header"><span class="rev-name">Divya K.</span><span class="rev-date">Oct 2024</span></div>
+      <div class="rev-stars">★★★★☆</div>
+      <p class="rev-text">Very nice gift item. Slightly smaller than I expected but the engraving quality is top notch. Would recommend the A3 size for better visibility.</p>
+    </div>
+  </div>
+
+  <div id="tab-care" class="tab-content">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.2rem;">
+      <div style="background:rgba(44,32,16,0.4);border:1px solid var(--border);padding:1.2rem;">
+        <div style="font-size:1.5rem;margin-bottom:0.5rem;">🧹</div>
+        <h4 style="font-size:0.8rem;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem;">Cleaning</h4>
+        <p style="font-size:0.82rem;color:var(--muted);line-height:1.6;">Wipe with a dry soft cloth. Avoid wet cleaning or chemical sprays on the engraved surface.</p>
+      </div>
+      <div style="background:rgba(44,32,16,0.4);border:1px solid var(--border);padding:1.2rem;">
+        <div style="font-size:1.5rem;margin-bottom:0.5rem;">☀️</div>
+        <h4 style="font-size:0.8rem;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem;">Sunlight</h4>
+        <p style="font-size:0.82rem;color:var(--muted);line-height:1.6;">Avoid prolonged direct sunlight which may cause the wood to fade or crack over time.</p>
+      </div>
+      <div style="background:rgba(44,32,16,0.4);border:1px solid var(--border);padding:1.2rem;">
+        <div style="font-size:1.5rem;margin-bottom:0.5rem;">💧</div>
+        <h4 style="font-size:0.8rem;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem;">Moisture</h4>
+        <p style="font-size:0.82rem;color:var(--muted);line-height:1.6;">Keep away from damp areas. Apply a thin coat of wood wax polish every 6 months.</p>
+      </div>
+      <div style="background:rgba(44,32,16,0.4);border:1px solid var(--border);padding:1.2rem;">
+        <div style="font-size:1.5rem;margin-bottom:0.5rem;">📦</div>
+        <h4 style="font-size:0.8rem;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem;">Storage</h4>
+        <p style="font-size:0.82rem;color:var(--muted);line-height:1.6;">Store in the original kraft box if not displaying. Keep in a cool, dry place.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RELATED PRODUCTS -->
+<div class="related">
+  <h3>You May Also <span>Like</span></h3>
+  <div class="rel-grid">
+    <div class="product-card"><div class="product-img">🎴</div><div class="product-info"><div class="p-name">Mandala Wall Art</div><div class="p-footer"><span class="price">₹1,899</span><button class="add-btn">+</button></div></div></div>
+    <div class="product-card"><div class="product-img">☕</div><div class="product-info"><div class="p-name">Wooden Coaster Set</div><div class="p-footer"><span class="price">₹799</span><button class="add-btn">+</button></div></div></div>
+    <div class="product-card"><div class="product-img">🎀</div><div class="product-info"><div class="p-name">Anniversary Gift Box</div><div class="p-footer"><span class="price">₹2,199</span><button class="add-btn">+</button></div></div></div>
+    <div class="product-card"><div class="product-img">🕯️</div><div class="product-info"><div class="p-name">Personalised Diya Stand</div><div class="p-footer"><span class="price">₹649</span><button class="add-btn">+</button></div></div></div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="logo"><span class="logo-main">MakersKatte</span><span class="logo-sub">लेज़र शिल्पकला • India</span></a>
+      <p>Precision laser engraving crafted with love in India.</p>
+      <div class="footer-contact">
+        <div class="contact-item"><span>📍</span><span>Bengaluru, Karnataka</span></div>
+        <div class="contact-item"><span>📞</span><span>+91 98765 43210</span></div>
+      </div>
+    </div>
+    <div class="footer-col"><h4>Shop</h4><ul><li><a href="shop.html">All Products</a></li><li><a href="categories.html">Categories</a></li><li><a href="custom-order.html">Custom Order</a></li></ul></div>
+    <div class="footer-col"><h4>Help</h4><ul><li><a href="#">Track Order</a></li><li><a href="#">Returns</a></li><li><a href="#">FAQs</a></li></ul></div>
+    <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="#">Blog</a></li><li><a href="#">Careers</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 MakersKatte India Pvt. Ltd. · GST: 29XXXXX1234Z1ZX</p>
+    <div class="pay-badges"><span class="pay-badge">UPI</span><span class="pay-badge">Razorpay</span><span class="pay-badge">COD</span><span class="pay-badge">EMI</span></div>
+  </div>
+</footer>
+<a href="https://wa.me/918095047273" class="wa-float">💬</a>
+<script>
+function changeQty(d){const el=document.getElementById('qtyVal');let v=parseInt(el.textContent)+d;if(v<1)v=1;el.textContent=v;}
+function switchTab(btn,id){document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));btn.classList.add('active');document.getElementById(id).classList.add('active');}
+document.querySelectorAll('.thumb').forEach(t=>t.addEventListener('click',function(){document.querySelectorAll('.thumb').forEach(x=>x.classList.remove('active'));this.classList.add('active');}));
+document.querySelectorAll('.size-btn:not(.oos)').forEach(b=>b.addEventListener('click',function(){document.querySelectorAll('.size-btn').forEach(x=>x.classList.remove('active'));this.classList.add('active');}));
+document.querySelectorAll('.wood-btn').forEach(b=>b.addEventListener('click',function(){document.querySelectorAll('.wood-btn').forEach(x=>x.classList.remove('active'));this.classList.add('active');}));
+</script>
+</body>
+</html>
